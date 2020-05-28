@@ -1,0 +1,26 @@
+<mat-toolbar color="primary" class="expanded-toolbar">Ingreso de Jugador</mat-toolbar>
+
+<mat-card>
+  <mat-card-title>Login</mat-card-title>
+  <div mat-card-avatar class="example-header-image"></div>
+  <form action="">
+    <mat-form-field class="full-width-input">
+      <mat-label>Mail</mat-label>
+      <input matInput type="text" [(ngModel)]="mail" name="umail">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="full-width-input">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" [(ngModel)]="clave" name="psw">
+    </mat-form-field>
+    <br>
+    <button [hidden]="ocultarVerificar"  mat-raised-button color="primary" *ngIf="logeando"  (click)="Entrar()">Entrar</button>
+    <button [hidden]="!ocultarVerificar" mat-raised-button color="primary" *ngIf="logeando"  (click)="Entrar()"><i class="fa fa-spinner fa-spin"></i> Ingresando</button>
+  </form>
+  <br>
+  <mat-divider></mat-divider>
+  <br>
+  <h3>No tenes usuario? <a href="/registro">Registrate</a></h3>
+</mat-card>
+
+<app-footer></app-footer>

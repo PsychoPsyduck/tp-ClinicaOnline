@@ -1,0 +1,21 @@
+<mat-toolbar color="primary">
+    <section>
+      <button mat-button class="logo" (click)="Router('Home')">
+        <img src="/assets/imagenes/logo.png" alt="">
+        <span>Sala de Juegos</span>
+      </button>
+  
+      <div class="MenuButton">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
+          <mat-icon>menu</mat-icon>
+        </button>
+      
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="Router('Salir')">
+            <mat-icon>power_settings_new</mat-icon>
+            <span>LogOut</span>
+          </button>
+        </mat-menu>
+      </div>
+    </section>
+  </mat-toolbar>
