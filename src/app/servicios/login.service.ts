@@ -88,7 +88,7 @@ export class LoginService {
     firebase.auth().signOut().then(function () {
       // Sign-out successful.
       console.log("Bien")
-      router.navigate(['/Login']);
+      router.navigate(['/']);
     }).catch(function (error) {
       console.error("Error: ", error);
     });

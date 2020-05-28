@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-// import { FirebaseService } from '../../servicios/firebase.service';
+import { LoginService } from '../../servicios/login.service';
 
 @Component({
   selector: 'app-cabecera',
@@ -10,8 +10,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 export class CabeceraComponent implements OnInit {
 
   constructor(
-    private router: Router
-    //public firebaseService: FirebaseService
+    private router: Router,
+    public loginService: LoginService
     ) { }
 
   ngOnInit() {
@@ -23,7 +23,7 @@ export class CabeceraComponent implements OnInit {
           this.router.navigate(['/home']);
         break;
       case 'Salir':
-          // this.firebaseService.logoutJugador();
+          this.loginService.logOut();
         break;
       case 'Configuracion':
           this.router.navigate(['/Configuracion']);
