@@ -31,6 +31,10 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { RegistroAdmComponent } from './componentes/registro-adm/registro-adm.component';
+import { CuentaComponent } from './componentes/cuenta/cuenta.component';
+import { PrimerNuevoRegistroComponent } from './componentes/registro-adm/primer-nuevo-registro/primer-nuevo-registro.component';
+import { SegundoNuevoRegistroComponent } from './componentes/registro-adm/segundo-nuevo-registro/segundo-nuevo-registro.component';
 // import { FirebaseService } from './servicios/firebase.service';
 
 @NgModule({
@@ -45,7 +49,11 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     AtenderTurnoComponent,
     VerReseniaComponent,
     EncuestaComponent,
-    FichaMedicaComponent
+    FichaMedicaComponent,
+    RegistroAdmComponent,
+    CuentaComponent,
+    PrimerNuevoRegistroComponent,
+    SegundoNuevoRegistroComponent
   ],
   imports: [
     BrowserModule,

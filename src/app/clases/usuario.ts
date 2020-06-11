@@ -4,5 +4,7 @@ export class Usuario {
     mail: string;
     contraseña: string;
     rol: string;
+    img1: string;
+    img2: string;
     
 }

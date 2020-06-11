@@ -25,15 +25,16 @@ export class RegistroComponent implements OnInit {
   clave= '';
   repitaClave= '';
   terminosCondiciones: boolean;
+  img1 = null;
+  img2;
 
   usuario: Usuario = new Usuario();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    public loginService: LoginService
-    ) 
-  { }
+    public loginService: LoginService) {
+  }
 
   ngOnInit() {
   }
@@ -50,7 +51,11 @@ export class RegistroComponent implements OnInit {
     this.usuario.rol = "user";
     
     if (this.clave === this.repitaClave && this.terminosCondiciones == true) {
-      this.loginService.signUp(this.usuario)
+      this.loginService.signUp(this.usuario, this.img1, this.img1);
     }
+  }
+
+  onFileSelected(event) {
+    this.img1 = event.target.files[0];
   }
 }

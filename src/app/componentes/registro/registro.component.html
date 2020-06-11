@@ -29,6 +29,11 @@
       <input matInput type="password" [(ngModel)]="repitaClave" name="rpsw">
     </mat-form-field>
     <br>
+    <div class="full-width-input">
+      <mat-label>Imagen 1</mat-label>
+      <input type="file" (change)="onFileSelected($event)">
+    </div>
+    <br>
     <mat-checkbox class="example-margin" [(ngModel)]="terminosCondiciones" name="chck">Acepto terminos y condiciones.</mat-checkbox>
     <br>
     <button class="example-button-row" mat-raised-button color="warn" (click)="Volver()">Volver</button>

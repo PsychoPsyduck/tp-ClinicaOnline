@@ -22,6 +22,9 @@ export class CabeceraComponent implements OnInit {
       case 'Home':
           this.router.navigate(['/home']);
         break;
+      case 'registro':
+          this.router.navigate(['/registroAdm']);
+        break;
       case 'Salir':
           this.loginService.logOut();
         break;

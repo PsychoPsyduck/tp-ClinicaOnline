@@ -1,0 +1,12 @@
+<app-cabecera></app-cabecera>
+
+
+<a id="primero" routerLink="/registroAdm" routerLinkActive="active">primero</a>
+
+<a id="segundo" routerLink="/registroAdm/segundo" routerLinkActive="active">Segundo</a>
+
+<div [@routeAnimations]="prepareRoute(outlet)" >
+  <router-outlet #outlet="outlet"></router-outlet>
+</div>
+  
+<!-- <app-footer></app-footer> -->

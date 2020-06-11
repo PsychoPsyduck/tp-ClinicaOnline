@@ -6,6 +6,8 @@ import {Subscription, BehaviorSubject} from "rxjs";
 import { LoginService } from '../../servicios/login.service';
 import { Usuario } from '../../clases/usuario';
 
+import { AuthService } from './../../auth/auth.service';
+
 //import {TimerObservable} from "rxjs/observable/TimerObservable";
 @Component({
   selector: 'app-login',
@@ -29,7 +31,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    public loginService: LoginService
+    public loginService: LoginService, private authService: AuthService
     ) {
       this.Tiempo=5; 
       this.ocultarVerificar=false;
@@ -42,6 +44,7 @@ export class LoginComponent implements OnInit {
     
     this.ocultarVerificar=true;
     this.loginService.logIn(this.mail, this.clave);
+    this.authService.login().subscribe(resp => this.router.navigate(['home']));
 
     this.repetidor = setInterval(()=>{ 
       
