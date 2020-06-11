@@ -12,10 +12,10 @@ import { PrimerNuevoRegistroComponent } from './componentes/registro-adm/primer-
 const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'registro', component: RegistroComponent},
-  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
-  {path: 'registroAdm' , component: RegistroAdmComponent, canActivate: [AuthGuard], children: //, canActivate: [AuthGuard]
-      [{path: '' , component: PrimerNuevoRegistroComponent, canActivate: [AuthGuard], data: {animation: 'Usuario'}},
-      {path: 'segundo' , component: SegundoNuevoRegistroComponent, canActivate: [AuthGuard], data: {animation: 'Login'}}]
+  {path: 'home', component: HomeComponent}, //, canActivate: [AuthGuard]
+  {path: 'registroAdm' , component: RegistroAdmComponent, children: //, canActivate: [AuthGuard]
+      [{path: '' , component: PrimerNuevoRegistroComponent, data: {animation: 'Usuario'}},
+      {path: 'segundo' , component: SegundoNuevoRegistroComponent, data: {animation: 'Login'}}]
 },
   {path: '**', pathMatch: 'full', redirectTo: ''}
 ];

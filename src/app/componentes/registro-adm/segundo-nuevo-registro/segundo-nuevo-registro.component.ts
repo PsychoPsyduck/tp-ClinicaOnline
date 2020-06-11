@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { LoginService } from '../../../servicios/login.service';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { Usuario } from 'src/app/clases/usuario';
+import { slideInAnimation } from 'src/app/animations';
+
+interface Food {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-segundo-nuevo-registro',
@@ -8,12 +16,52 @@ import { RouterOutlet } from '@angular/router';
 })
 export class SegundoNuevoRegistroComponent implements OnInit {
 
-  constructor() { }
+  selectedValue: string;
+  nombre = '';
+  apellido = '';
+  mail = '';
+  clave= '';
+  repitaClave= '';
+  terminosCondiciones: boolean;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    public loginService: LoginService) {
+  }
 
   ngOnInit(): void {
   }
 
-  // prepareRoute(outlet: RouterOutlet) {
-  //   return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
-  // }
+  foods: Food[] = [
+    {value: 'usuario', viewValue: 'Paciente'},
+    {value: 'profesional', viewValue: 'Doctor'},
+    {value: 'admin', viewValue: 'Administrador'}
+  ];
+  
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
+  }
+
+  Volver() {
+    this.router.navigate(['/Login']);
+  }
+
+  Registrar() {
+    switch (this.selectedValue) {
+      case "usuario":
+        console.log("loginUsuario");
+        break;
+      case "profesional":
+        console.log("loginProfesional");
+        break;
+      case "admin":
+        console.log("loginAdmin");
+        break;
+    
+      default:
+        break;
+    }
+  }
+  
 }
