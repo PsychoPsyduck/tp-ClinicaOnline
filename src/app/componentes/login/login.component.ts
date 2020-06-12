@@ -28,6 +28,8 @@ export class LoginComponent implements OnInit {
   Tiempo: number;
   repetidor:any;
 
+  recaptcha: any;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -59,6 +61,9 @@ export class LoginComponent implements OnInit {
     }, 900);
   }
 
-  
+  resolved(captchaResponse: any) {
+    this.recaptcha = captchaResponse;
+    console.log(this.recaptcha);
+  }
   
 }

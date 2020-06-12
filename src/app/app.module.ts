@@ -17,6 +17,7 @@ import { VerReseniaComponent } from './componentes/ver-resenia/ver-resenia.compo
 import { EncuestaComponent } from './componentes/encuesta/encuesta.component';
 import { FichaMedicaComponent } from './componentes/ficha-medica/ficha-medica.component';
 import { HttpClientModule  } from '@angular/common/http';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 
 // Firebase App (the core Firebase SDK) is always required and must be listed first
@@ -64,7 +65,8 @@ import { SegundoNuevoRegistroComponent } from './componentes/registro-adm/segund
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    RecaptchaModule
   ],
   providers: [],
   bootstrap: [AppComponent]
