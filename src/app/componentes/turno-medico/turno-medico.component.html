@@ -1,0 +1,9 @@
+<app-cabecera></app-cabecera>
+
+    <div class="container">
+
+        <app-atender-turno  [atenderTurno]="this.turnoSeleccionado"></app-atender-turno>
+        <app-seleccionar-turno (turnoSeleccionado)="enviarTurnoSeleccionado($event)" ></app-seleccionar-turno>
+
+    </div>
+<app-footer></app-footer>

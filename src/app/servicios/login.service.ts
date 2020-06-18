@@ -4,6 +4,8 @@ import { Usuario } from '../clases/usuario';
 import { Router } from '@angular/router';
 import { UploadService } from './upload.service';
 
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
 
 import * as firebase from "firebase/app";
 
@@ -18,10 +20,16 @@ import "firebase/firestore";
 })
 export class LoginService {
 
+  private usuario:Observable<firebase.User>;
+
   constructor(public router: Router,
-              public uploadService: UploadService) { }
+              public uploadService: UploadService,
+              public angularFireAuth:AngularFireAuth) {
+              this.usuario = this.angularFireAuth.authState;
+               }
 
   user = null;
+  listado:any;
 
   db = firebase.firestore();
 
@@ -29,7 +37,7 @@ export class LoginService {
     var router = this.router;
     var dbRef = this.db;
 
-    this.uploadImg(usuario, img1, img2);
+    // this.uploadImg(usuario, img1, img2);
 
     firebase.auth().createUserWithEmailAndPassword(usuario.mail, usuario.contraseña)
     .then(function(credencial) {
@@ -44,7 +52,8 @@ export class LoginService {
         img2: usuario.img2
       })
       .then(function (docRef) {
-        console.log("Bien")
+        this.uploadImg(usuario, img1, img2);
+        console.log("Bien");
       });
       credencial.user.getIdToken()
         .then(function (token) {
@@ -71,75 +80,56 @@ export class LoginService {
     });
   }
 
-  logIn(email: string, pass: string) {
-    var router = this.router;
-    var dbRef = this.db;
+  public logIn( mail:string, contraseña:string ){
+    return this.angularFireAuth.signInWithEmailAndPassword(mail,contraseña);
+  }
 
-    firebase.auth().signInWithEmailAndPassword(email, pass)
-    .then(function (credential) {
-      console.log(credential);
-      dbRef.collection("usuarios")
-      .where("uid", "==", credential.user.uid)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-        console.log(doc.data());
-        credential.user.getIdToken()
-          .then(function (token) {
-            
-            console.log("Bien")
-            
-            localStorage.setItem('token', token);
-            router.navigate(['/home']);
-          });
-        });
-      });
-    })
-    .catch(function (error) {
-      console.error("Error: ", error);
-    });
+  async getUser(email) {
     
-  }
-
-  logOut() {
-    var router = this.router;
-
-    localStorage.removeItem('token');
-    firebase.auth().signOut().then(function () {
-      // Sign-out successful.
-      console.log("Bien")
-      router.navigate(['/']);
-    }).catch(function (error) {
-      console.error("Error: ", error);
-    });
-  }
-
-  async getUser() {
-    ;
     var dbRef = this.db;
 
-    let user = await dbRef.collection('usuarios').where("uid", "==", 'qJVnYq64TnaUnELf5oVV6dtxQqC2').get();
-    // .then((querySnapshot) => {
-    //   querySnapshot.forEach((doc) => {
+    let querySnapshot = await dbRef.collection('usuarios').where("email", "==", email).get();
 
-    //     user = doc.data();
+    this.user = querySnapshot.docs.map(function(x){
+      return x.data();
+    });
 
-    //     console.log("userService");
-    //     console.log(user.rol);
-    //   })
-    //});
-
-    return user;
+    return this.user[0];
   }
 
-  async getCurrentUser() {
-    firebase.auth().onAuthStateChanged(async user => {
-      return user;
-    });
+  async getCurrentUser(mail) {
+    let usrsRef = await this.db.collection('usuarios').where("mail", "==", mail).get();
+
+    var listado = usrsRef.docs.map(function(x){
+      return x.data();
+    });  
+
+    
+    var usuario = new Usuario(listado[0].nombre, listado[0].apellido, 11, listado[0].mail, listado[0].contraseña, listado[0].rol);
+
+    return usuario;
   }
 
   async getUsers() {
-    let usrsRef = await this.db.collection('usuarios').get();
+    let usrsRef = await this.db.collection('usuarios').where("mail", "==", "nialsande@gmail.com").get();
     return usrsRef;
+  }
+
+  public currentUser(){
+    return this.angularFireAuth.currentUser;
+  }
+
+  public logueado(){
+    return this.angularFireAuth.currentUser.then(resp=>{
+      if(resp){
+        return true;
+      }else{
+        return false;
+      }
+    })
+  }
+
+  public logOut(){
+    return this.angularFireAuth.signOut();
   }
 }

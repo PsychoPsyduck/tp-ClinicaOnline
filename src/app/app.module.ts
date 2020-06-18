@@ -9,7 +9,7 @@ import { LoginComponent } from './componentes/login/login.component';
 import { RegistroComponent } from './componentes/registro/registro.component';
 import { CabeceraComponent } from './componentes/cabecera/cabecera.component';
 import { FooterComponent } from './componentes/footer/footer.component';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HomeComponent } from './componentes/home/home.component';
 import { PedirTurnoComponent } from './componentes/pedir-turno/pedir-turno.component';
 import { AtenderTurnoComponent } from './componentes/atender-turno/atender-turno.component';
@@ -36,7 +36,14 @@ import { RegistroAdmComponent } from './componentes/registro-adm/registro-adm.co
 import { CuentaComponent } from './componentes/cuenta/cuenta.component';
 import { PrimerNuevoRegistroComponent } from './componentes/registro-adm/primer-nuevo-registro/primer-nuevo-registro.component';
 import { SegundoNuevoRegistroComponent } from './componentes/registro-adm/segundo-nuevo-registro/segundo-nuevo-registro.component';
+import { SeleccionarTurnoComponent } from './componentes/seleccionar-turno/seleccionar-turno.component';
+import { DiasPipe } from './pipes/dias.pipe';
+import { NombrePipe } from './pipes/nombre.pipe';
 // import { FirebaseService } from './servicios/firebase.service';
+
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { TurnoMedicoComponent } from './componentes/turno-medico/turno-medico.component';
+
 
 @NgModule({
   declarations: [
@@ -54,18 +61,24 @@ import { SegundoNuevoRegistroComponent } from './componentes/registro-adm/segund
     RegistroAdmComponent,
     CuentaComponent,
     PrimerNuevoRegistroComponent,
-    SegundoNuevoRegistroComponent
+    SegundoNuevoRegistroComponent,
+    SeleccionarTurnoComponent,
+    DiasPipe,
+    NombrePipe,
+    TurnoMedicoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialComponent,
+    ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    AngularFireStorageModule,
     RecaptchaModule
   ],
   providers: [],

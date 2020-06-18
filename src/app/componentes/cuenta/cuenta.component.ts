@@ -17,7 +17,7 @@ export class CuentaComponent implements OnInit {
   constructor(public loginService: LoginService) { 
     
     this.mostrarDatos=false;
-    this.usuario = new Usuario;
+    this.usuario = new Usuario('','',40,'','','');
 
   }
 
@@ -27,7 +27,7 @@ export class CuentaComponent implements OnInit {
 
   async getUser() {
 
-    var querySnapshot  = await this.loginService.getUser();
+    var querySnapshot  = await this.loginService.getUser("nialsande@gmail.com");
 
     this.user = querySnapshot.docs.map(function(x){
       return x.data();
@@ -52,8 +52,8 @@ export class CuentaComponent implements OnInit {
 
   async TraerTodos(){
     var querySnapshot  = await this.loginService.getUsers();
-     this.listado = querySnapshot.docs.map(function(x){
-        return x.data();
-      });    
+    this.listado = querySnapshot.docs.map(function(x){
+      return x.data();
+    });
   }
 }

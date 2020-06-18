@@ -7,6 +7,7 @@ import { LoginService } from '../../servicios/login.service';
 import { Usuario } from '../../clases/usuario';
 
 import { AuthService } from './../../auth/auth.service';
+import { UsuarioService } from 'src/app/servicios/usuario.service';
 
 //import {TimerObservable} from "rxjs/observable/TimerObservable";
 @Component({
@@ -33,8 +34,9 @@ export class LoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    public loginService: LoginService, private authService: AuthService
-    ) {
+    public loginService: LoginService, 
+    private authService: AuthService,
+    private usuarioService: UsuarioService) {
       this.Tiempo=5; 
       this.ocultarVerificar=false;
     }
@@ -46,7 +48,14 @@ export class LoginComponent implements OnInit {
     
     this.ocultarVerificar=true;
     this.loginService.logIn(this.mail, this.clave);
-    this.authService.login().subscribe(resp => this.router.navigate(['home']));
+    this.authService.login().subscribe(resp => {this.router.navigate(['home'])
+      console.log("Esto es resp: " + resp)
+    });
+
+    let getCurrentUser = this.loginService.getCurrentUser(this.mail);
+    console.log("getCurrentUser");
+    console.log(getCurrentUser);
+
 
     this.repetidor = setInterval(()=>{ 
       

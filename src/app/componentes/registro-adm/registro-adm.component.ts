@@ -27,7 +27,7 @@ export class RegistroAdmComponent implements OnInit {
   repitaClave= '';
   terminosCondiciones: boolean;
 
-  usuario: Usuario = new Usuario();
+  usuario: Usuario = new Usuario('','',40,'','','');
 
   constructor(
     private route: ActivatedRoute,

@@ -28,7 +28,7 @@ export class RegistroComponent implements OnInit {
   img1 = null;
   img2;
 
-  usuario: Usuario = new Usuario();
+  usuario: Usuario = new Usuario(this.nombre, this.apellido, 40, this.mail, this.clave, '');
 
   constructor(
     private route: ActivatedRoute,

@@ -1,1 +1,32 @@
-<p>atender-turno works!</p>
+<!-- <app-cabecera></app-cabecera> -->
+
+<mat-card>
+    <mat-card-title>Atencion de turno</mat-card-title>
+    <div  *ngIf="atenderTurno" class="card" >
+        
+        <div class="card-body">
+            <p class="card-title">Medico: {{atenderTurno.medico}}</p>
+            <p class="card-text">Duracion: {{atenderTurno.duracion}}</p>
+            <p class="card-text">Fecha: {{atenderTurno.fecha}}</p>
+            <p class="card-text">Horario: {{atenderTurno.horario}}</p>
+            <p class="card-text">Especialidad: {{atenderTurno.especialidad}}</p>
+            <p class="card-text">Reseña: {{atenderTurno.resenia}}</p>
+            <p>
+                <label for="size_1">Reseña: </label>
+                <!-- <mat-label>Mail</mat-label> matInput -->
+                <!-- <input matInput type="text" [(ngModel)]="mail" name="umail"> -->
+                <input [disabled]="!turnoActivo" type="text" [(ngModel)]="resenia" name="resenia" >
+            </p>
+            <p class="card-text">Paciente: {{atenderTurno.paciente}}</p>
+            <p class="card-text">Estado: {{atenderTurno.estado}}</p>
+            <button *ngIf="!turnoActivo" mat-raised-button color="primary"  (click)="atender()">Atender</button>
+            <button *ngIf="turnoActivo" mat-raised-button color="primary"  (click)="terminarTurno()">Terminar turno</button>
+            
+        </div>
+    </div>
+
+</mat-card>
+
+<!-- <app-footer></app-footer> -->
+
+
