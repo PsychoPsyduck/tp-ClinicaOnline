@@ -2,11 +2,11 @@
 
 Trabajo práctico - Laboratorio IV
 
+_Este proyecto fue generado con Angular CLI versión 9.1.6._
+
 ## Sitio de prueba 🚀
 
 [Clinica Online](https://sande-clinica-online.herokuapp.com/)
-
-_Este proyecto fue generado con Angular CLI versión 9.1.6._
 
 ### Instalación y ejecución 🔧
 
