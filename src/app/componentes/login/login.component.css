@@ -1,5 +1,5 @@
 .example-header-image {
-    background-image: url('/assets/imagenes/login.png');
+    background-image: url('/assets/img/login.png');
     background-size: cover;
     display: block;
     margin-left: auto;
@@ -14,4 +14,16 @@ mat-card {
 
 .recaptcha {
     display: inline-block;
+}
+
+
+.ingresoRapido {
+    text-align: center;
+}
+
+.ingresoRapido button{
+    width: auto;
+    text-align: center;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
 }

@@ -2,84 +2,34 @@
 
 <mat-card>
   <mat-card-title>Pedir Turno</mat-card-title>
-  <div class="panel-group">
-    <div class="panel panel-default">
-        <div class="panel-heading clickable">
-            <h3 class="panel-title">Búsqueda Avanzada</h3>
-        </div>
-        <div id="collapse1" class="panel-collapse">
-            <div class="panel-body">
-                <form id="formTotales" role="form" class="form-horizontal">
+  <form role="form" class="form-horizontal">
 
-                    <div class="row">
-                        <div class="col-md-4">
-                          <mat-form-field color="accent">
-                            <mat-label>Seleccione una fecha</mat-label>
-                            <input matInput [matDatepicker]="picker1">
-                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                            <mat-datepicker #picker1></mat-datepicker>
-                          </mat-form-field>
-                        </div>
+    <mat-form-field color="accent">
+      <mat-label>Seleccione una fecha</mat-label>
+      <input matInput [matDatepicker]="picker1">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
 
-                        <div class="col-md-4">
-                          <mat-form-field class="full-width-input">
-                            <mat-label>Medico</mat-label>
-                            <mat-select [(ngModel)]="selectedValueProf" name="profesional">
-                                <mat-option *ngFor="let profesional of profesionales" [value]="profesional.mail">
-                                    Dr. {{profesional.apellido}}
-                                </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                        </div>
+    <mat-form-field>
+      <mat-label>Medico</mat-label>
+      <mat-select [(ngModel)]="selectedValueProf" name="profesional">
+        <mat-option *ngFor="let profesional of profesionales" [value]="profesional.mail">
+          Dr. {{profesional.apellido}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-                        <div class="col-md-4">
-                          <mat-form-field class="full-width-input">
-                            <mat-label>Horario</mat-label>
-                            <mat-select [(ngModel)]="selectedValueHora" name="turnoHora">
-                                <mat-option *ngFor="let turnoHora of turnoshoras" [value]="turnoHora.value">
-                                    {{turnoHora.value}}
-                                </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-offset-8 col-md-4">
-                            <div class="btn-group pull-right" role="group">
-                                <button type="button" class="btn btn-primary" id="Buscar" (click)="pedirTurno()"><i class="fas fa-search"></i> Consultar</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-  </div>
+    <mat-form-field>
+      <mat-label>Horario</mat-label>
+      <mat-select [(ngModel)]="selectedValueHora" name="turnoHora">
+        <mat-option *ngFor="let turnoHora of turnoshoras" [value]="turnoHora.value">
+          {{turnoHora.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <button class="example-button-row" mat-raised-button color="primary" (click)="pedirTurno()"><i class="fas fa-search"></i> Solicitar</button>
+  </form>
   <br>
-    <mat-divider></mat-divider>
-  <br>
-  <mat-card-title>Turno confirmado?</mat-card-title>
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th>Dia</th>
-        <th>Hora</th>
-        <th>Doctor</th>
-        <th>Especialidad</th>
-        <th>Reservar</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- <tr *ngFor="let turno of turnos" >
-        <td>{{usuario.nombre}} {{usuario.apellido}}</td>
-        <td>{{usuario.mail}} </td> 
-        <td>{{usuario.rol}} </td> 
-        <td><img [src]="usuario.img1" alt=""></td> 
-        <td><img [src]="usuario.img2" alt=""></td> 
-        
-      </tr> -->
-    
-    </tbody>
-  </table>
 </mat-card>

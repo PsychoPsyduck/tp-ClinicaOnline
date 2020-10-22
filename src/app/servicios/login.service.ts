@@ -69,12 +69,12 @@ export class LoginService {
   public uploadImg( usuario: Usuario, imagen1, imagen2){
     this.uploadService.subirArchivo(usuario.mail+"_img1",imagen1,{nombre:usuario.nombre,apellido:usuario.apellido}).then((img)=>{
       this.uploadService.subirArchivo(usuario.mail+"_img2",imagen2,{nombre:usuario.nombre,apellido:usuario.apellido}).then(img2=>{
-       img.ref.getDownloadURL().then(data=>{
+        img.ref.getDownloadURL().then(data=>{
         usuario.img1=data;
         console.log(data);
         img2.ref.getDownloadURL().then(data2=>{
           usuario.img2=data2;
-         });
+        });
        });  
       });
     });
@@ -131,5 +131,48 @@ export class LoginService {
 
   public logOut(){
     return this.angularFireAuth.signOut();
+  }
+
+
+  //New Era
+  SendVerificationMail() {
+    return firebase.auth().currentUser.sendEmailVerification()
+    .then(() => {
+      this.router.navigate(['<!-- enter your route name here -->']);
+    })
+  }
+
+  registroUsuario(email, password) {
+    return firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        this.SendVerificationMail(); // Sending email verification notification, when new user registers
+      }).catch((error) => {
+        window.alert(error.message)
+      })
+  }
+
+  registroAdmin() {
+
+  }
+
+  registroProfesional() {
+
+  }
+
+  ingreso(email, password) {
+    return firebase.auth().signInWithEmailAndPassword(email, password)
+    .then((result) => {
+      if (result.user.emailVerified !== true) {
+        this.SendVerificationMail();
+        window.alert('Please validate your email address. Kindly check your inbox.');
+      } else {
+        // this.ngZone.run(() => {
+          this.router.navigate(['<!-- enter your route name here -->']);
+        // });
+      }
+      // this.SetUserData(result.user);
+    }).catch((error) => {
+      window.alert(error.message)
+    })
   }
 }

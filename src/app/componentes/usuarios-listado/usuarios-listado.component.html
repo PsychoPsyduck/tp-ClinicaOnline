@@ -1,0 +1,24 @@
+<app-cabecera></app-cabecera>
+
+<mat-card>
+    <mat-card-title>Listado de usuarios</mat-card-title>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Correo</th>
+          <th>Rol</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let profesional of listadoUsuarios" >
+          <td>{{profesional.nombre}} </td> 
+          <td>{{profesional.apellido}} </td>
+          <td>{{profesional.mail}} </td>
+          <td>{{profesional.rol}} </td>
+        </tr>
+      
+      </tbody>
+    </table>
+</mat-card>

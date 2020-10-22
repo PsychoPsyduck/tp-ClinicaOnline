@@ -28,6 +28,19 @@ export class RegistroComponent implements OnInit {
   img1 = null;
   img2;
 
+  esProfesional = false;
+  esPaciente = true;
+
+  master_checked: boolean = false;
+  master_indeterminate: boolean = false;
+  checkbox_list = [];
+  checked_list = [];
+
+  profesionales = [
+    {value: 'admin', viewValue: 'Administrador'},
+    {value: 'profesional', viewValue: 'Profesional'}
+  ];
+
   usuario: Usuario = new Usuario(this.nombre, this.apellido, 40, this.mail, this.clave, '');
 
   constructor(
@@ -37,6 +50,44 @@ export class RegistroComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.checkbox_list = [
+      {
+        name: "Cardiologo",
+        disabled: false,
+        checked: false,
+        labelPosition: "after"
+      }, {
+        name: "Kinesiologo",
+        disabled: false,
+        checked: false,
+        labelPosition: "after"
+      }, {
+        name: "Clinico",
+        disabled: false,
+        checked: false,
+        labelPosition: "after"
+      }, {
+        name: "Audiologo",
+        disabled: false,
+        checked: false,
+        labelPosition: "after"
+      }, {
+        name: "Pediatra",
+        disabled: false,
+        checked: false,
+        labelPosition: "after"
+      }, {
+        name: "Dentista",
+        disabled: false,
+        checked: false,
+        labelPosition: "after"
+      }, {
+        name: "Cirujano",
+        disabled: false,
+        checked: false,
+        labelPosition: "after"
+      },
+    ]
   }
 
   Volver() {

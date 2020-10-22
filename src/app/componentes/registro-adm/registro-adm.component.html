@@ -1,12 +1,77 @@
 <app-cabecera></app-cabecera>
 
+<mat-card>
+  <mat-card-title>Registro Administrativo</mat-card-title>
+  <div mat-card-avatar class="example-header-image"></div>
+  <form action="">
+    <div class="row">
 
-<a id="primero" routerLink="/registroAdm" routerLinkActive="active">primero</a>
+      <div class="col-md-6">
+        <mat-form-field class="full-width-input">
+          <mat-label>Nombre</mat-label>
+          <input matInput type="text" [(ngModel)]="nombre" name="uname">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="full-width-input">
+          <mat-label>Apellido</mat-label>
+          <input matInput type="text" [(ngModel)]="apellido" name="usurname">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="full-width-input">
+          <mat-label>Mail</mat-label>
+          <input matInput type="text" [(ngModel)]="mail" name="umail">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="full-width-input">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" [(ngModel)]="clave" name="psw">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="full-width-input">
+          <mat-label>Repita Contraseña</mat-label>
+          <input matInput type="password" [(ngModel)]="repitaClave" name="rpsw">
+        </mat-form-field>
+        <br>
+      </div>
 
-<a id="segundo" routerLink="/registroAdm/segundo" routerLinkActive="active">Segundo</a>
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>Tipo de usuario</mat-label>
+          <mat-select [(ngModel)]="selectedValue" name="psw" (selectionChange)="seleccionUsuario()">
+            <mat-option *ngFor="let usuario of usuarios" [value]="usuario.value">
+              {{usuario.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="profesionalForm" *ngIf="esProfesional" >
+          <mat-label>Profesion:</mat-label>
 
-<div [@routeAnimations]="prepareRoute(outlet)" >
-  <router-outlet #outlet="outlet"></router-outlet>
-</div>
+          <mat-list class="lista" scroll>
+            <mat-list-item *ngFor="let item of checkbox_list">
+              <mat-checkbox
+              [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="item.checked"
+              [disabled]="item.disabled"
+              [labelPosition]="item.labelPosition"
+              (change)="list_change()"
+              >{{ item.name }}</mat-checkbox>
+            </mat-list-item>
+          </mat-list>
+
+        </div>
+        <div class="adminForm" *ngIf="esAdmin">
+          <div class="full-width-input">
+            <mat-label>Para dar el alta de un admin solicita captcha</mat-label><br>
+            <br>
+            <input type="file" (change)="onFileSelected($event)" disabled>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+    <button class="example-button-row" mat-raised-button color="primary" (click)="Registrar()">Registrar</button>
+  </form>
+</mat-card>
   
-<!-- <app-footer></app-footer> -->

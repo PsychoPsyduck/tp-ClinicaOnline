@@ -1,0 +1,22 @@
+<app-cabecera></app-cabecera>
+
+<mat-card>
+    <mat-card-title>Listado de profesionales</mat-card-title>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Especialidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let profesional of listadoProfesionales" >
+          <td>{{profesional.nombre}} </td> 
+          <td>{{profesional.apellido}} </td>
+          <td>{{profesional.especialidad}} </td>
+        </tr>
+      
+      </tbody>
+    </table>
+</mat-card>

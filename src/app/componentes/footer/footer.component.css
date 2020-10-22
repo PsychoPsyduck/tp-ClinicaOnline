@@ -1,4 +1,12 @@
-footer mat-card{
-    background-color:rgb(186, 204, 221);
-    text-align: center; 
+footer{
+    display:flex;
+    background-color: rgb(186, 204, 221);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    justify-content:center;
+    align-items:center;
+    text-align: center;
+    height: 6%;
 }

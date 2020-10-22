@@ -89,6 +89,5 @@ export class PedirTurnoComponent implements OnInit {
     this.profesionales = await this.usuarioService.get();
     console.log("this.profesionales");
     console.log(this.profesionales);
-
   }
 }
