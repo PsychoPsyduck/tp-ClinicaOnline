@@ -3,6 +3,7 @@ import { LoginService } from '../../servicios/login.service';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { Usuario } from 'src/app/clases/usuario';
 import { slideInAnimation } from 'src/app/animations';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 interface Food {
   value: string;
@@ -22,12 +23,13 @@ export class RegistroAdmComponent implements OnInit {
     usuario:this.email
   });*/
   
+  form: FormGroup;
   nombre = '';
   apellido = '';
   mail = '';
   clave= '';
   repitaClave= '';
-  terminosCondiciones: boolean;
+  // terminosCondiciones: boolean;
   img1 = null;
   img2;
 
@@ -50,66 +52,68 @@ export class RegistroAdmComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    public loginService: LoginService) {
+    public loginService: LoginService,
+    private fb: FormBuilder) {
   }
 
-  ngOnInit() {
+  
+
+  ngOnInit() {    
     this.checkbox_list = [
       {
         name: "Cardiologo",
         disabled: false,
         checked: false,
         labelPosition: "after"
-      }, {
-        name: "Kinesiologo",
-        disabled: false,
-        checked: false,
-        labelPosition: "after"
-      }, {
-        name: "Clinico",
-        disabled: false,
-        checked: false,
-        labelPosition: "after"
-      }, {
-        name: "Audiologo",
-        disabled: false,
-        checked: false,
-        labelPosition: "after"
-      }, {
-        name: "Pediatra",
-        disabled: false,
-        checked: false,
-        labelPosition: "after"
-      }, {
-        name: "Dentista",
-        disabled: false,
-        checked: false,
-        labelPosition: "after"
-      }, {
-        name: "Cirujano",
-        disabled: false,
-        checked: false,
-        labelPosition: "after"
-      },
+      }
     ]
+
+    this.form = this.fb.group({
+      nombre: ['', Validators.required],
+      apellido: ['', Validators.required],
+      mail: ['', Validators.required],
+      clave: ['', Validators.required],
+      repitaClave: ['', Validators.required],
+      rol: ['', Validators.required],
+      especialidad: ['', Validators.required],
+      terminosCondiciones: ['']
+    });
+
+    this.setUserRolValidators();
+  }
+
+  setUserRolValidators() {
+    const especialidadControl = this.form.get('especialidad');
+    const terminosCondicionesControl = this.form.get('terminosCondiciones');
+
+    this.form.get('rol').valueChanges
+      .subscribe(rol => {
+
+        if (rol === 'profesional') {
+          especialidadControl.setValidators([Validators.required]);
+          terminosCondicionesControl.setValidators(null);
+        }
+
+        if (rol === 'admin') {
+          especialidadControl.setValidators(null);
+          terminosCondicionesControl.setValidators([Validators.required]);
+        }
+
+        especialidadControl.updateValueAndValidity();
+        terminosCondicionesControl.updateValueAndValidity();
+      });
   }
 
   Volver() {
     this.router.navigate(['/Login']);
   }
 
-  Registrar() {
-    // this.usuario.nombre = this.nombre;
-    // this.usuario.apellido = this.apellido;
-    // this.usuario.mail = this.mail;
-    // this.usuario.contraseña = this.clave;
-    // this.usuario.rol = "user";
-    
-    // if (this.clave === this.repitaClave && this.terminosCondiciones == true) {
-    //   this.loginService.signUp(this.usuario, this.img1, this.img1);
-    // }
+  Registrar(event) {
+    event.preventDefault();
 
-    console.log(this.selectedValue);
+    if (this.form.valid) {
+      console.log(this.form.value);
+    }
   }
 
   onFileSelected(event) {
@@ -117,7 +121,9 @@ export class RegistroAdmComponent implements OnInit {
   }
 
   seleccionUsuario() {
-    if (this.selectedValue == "admin") {
+    const { rol } = this.form.value;
+
+    if (rol == "admin") {
       this.esAdmin = true;
       this.esProfesional = false
     } else {

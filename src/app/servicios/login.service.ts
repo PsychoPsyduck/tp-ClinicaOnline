@@ -14,6 +14,8 @@ import {environment} from '../../environments/environment';
 // Add the Firebase products that you want to use
 import "firebase/auth";
 import "firebase/firestore";
+import { rejects } from 'assert';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +26,8 @@ export class LoginService {
 
   constructor(public router: Router,
               public uploadService: UploadService,
-              public angularFireAuth:AngularFireAuth) {
+              public angularFireAuth:AngularFireAuth,
+              private afs: AngularFirestore) {
               this.usuario = this.angularFireAuth.authState;
                }
 
@@ -84,7 +87,7 @@ export class LoginService {
     return this.angularFireAuth.signInWithEmailAndPassword(mail,contraseña);
   }
 
-  async getUser(email) {
+  async getUserOld(email) {
     
     var dbRef = this.db;
 
@@ -138,7 +141,7 @@ export class LoginService {
   SendVerificationMail() {
     return firebase.auth().currentUser.sendEmailVerification()
     .then(() => {
-      this.router.navigate(['<!-- enter your route name here -->']);
+      this.router.navigate(['inicio']);
     })
   }
 
@@ -159,20 +162,33 @@ export class LoginService {
 
   }
 
-  ingreso(email, password) {
-    return firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((result) => {
-      if (result.user.emailVerified !== true) {
-        this.SendVerificationMail();
-        window.alert('Please validate your email address. Kindly check your inbox.');
-      } else {
-        // this.ngZone.run(() => {
-          this.router.navigate(['<!-- enter your route name here -->']);
-        // });
-      }
-      // this.SetUserData(result.user);
-    }).catch((error) => {
-      window.alert(error.message)
-    })
+  ingresoUsuario(email, password) {
+    return new Promise((resolve, reject) => { 
+      firebase.auth().signInWithEmailAndPassword(email, password)
+      .then((result) => {
+        if (result.user.emailVerified !== true) {
+          this.SendVerificationMail();
+          window.alert('Por favor valide su mail.');
+          reject();
+        } else {
+          resolve(result);
+        }
+      }).catch((error) => {
+        window.alert(error.message);
+        reject();
+      })
+    });
+  }
+
+  ingresoInstitucional(email, password) {
+    return new Promise((resolve, reject) => { 
+      firebase.auth().signInWithEmailAndPassword(email, password)
+      .then((result) => {
+        resolve(result);
+      }).catch((error) => {
+        window.alert(error.message);
+        reject();
+      })
+    });
   }
 }

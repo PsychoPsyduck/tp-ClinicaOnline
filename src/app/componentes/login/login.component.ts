@@ -9,6 +9,8 @@ import { Usuario } from '../../clases/usuario';
 
 import { AuthService } from './../../auth/auth.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
+// import { ToastrService } from 'ngx-toastr';
+import { DataService } from 'src/app/servicios/data.service';
 
 //import {TimerObservable} from "rxjs/observable/TimerObservable";
 @Component({
@@ -27,6 +29,10 @@ export class LoginComponent implements OnInit {
   logeando=true;
   ProgresoDeAncho:string;
 
+
+  usuarios;
+
+
   ocultarVerificar: boolean;
   Tiempo: number;
   repetidor:any;
@@ -39,7 +45,10 @@ export class LoginComponent implements OnInit {
     private router: Router,
     public loginService: LoginService, 
     private authService: AuthService,
-    private usuarioService: UsuarioService) {
+    private usuarioService: UsuarioService,
+    private dataService: DataService,
+    // private toastr:ToastrService
+    ) {
       this.Tiempo=5; 
       this.ocultarVerificar=false;
     }
@@ -49,38 +58,47 @@ export class LoginComponent implements OnInit {
       mail: ['', Validators.required],
       clave: ['', Validators.required]
     });
+
+    this.usuarios = this.dataService.getAll("usuarios");
   }
 
   Entrar() {
     const { mail, clave } = this.form.value;
-
-    // this.loginService.registroUsuario(mail, clave).then( res => {
-    //   console.log("Llega bien perri");
-    // }).catch(err => console.log(err));
+    let rol;
 
     if(mail && clave && this.recaptcha) {
-
       this.ocultarVerificar=true;
-      this.loginService.logIn(mail, clave).then( res => {
-        this.router.navigate(['/home']);
-        this.authService.login().subscribe(resp => {this.router.navigate(['home'])
-          console.log("Esto es resp: " + resp)
-        });
-      }).catch(err => console.log(err));
-
-      this.repetidor = setInterval(()=>{ 
-        
-        this.Tiempo--;
-        console.log("llego", this.Tiempo);
-        if(this.Tiempo==0 ) {
-          clearInterval(this.repetidor);
-          this.ocultarVerificar=false;
-          console.log(this.ocultarVerificar);
-          this.Tiempo=5;
+      
+      this.usuarios.forEach(element => {
+        if(element.mail == mail) {
+          rol = element.rol;
         }
-      }, 900);
+      });
+
+      if(rol == "profesional") {
+
+        this.loginService.ingresoInstitucional(mail, clave).then( res => {
+          console.log("Esto es usuario: " + res);
+          this.router.navigate(['/home']);
+          this.authService.login().subscribe(resp => {this.router.navigate(['home'])
+            console.log("Esto es prof: " + resp)
+          });
+        }).catch(err => console.log(err));
+        
+      } else if (rol == "usuario") {
+
+        this.loginService.ingresoUsuario(mail, clave).then( res => {
+          console.log("Esto es usuario: " + res);
+          this.router.navigate(['/home']);
+          this.authService.login().subscribe(resp => {this.router.navigate(['home'])
+            console.log("Esto es usuario: " + resp)
+          });
+        }).catch(err => console.log(err));
+
+      } else {
+        console.log("es perri");
+      }
     }
-    
   }
 
   resolved(captchaResponse: any) {
@@ -93,5 +111,9 @@ export class LoginComponent implements OnInit {
       mail: "invitado@mail.com",
       clave: "invitado"
     });
+  }
+
+  mostrarMensajeError(mensaje){
+    // this.toastr.error("Ocurrio un error: "+mensaje);
   }
 }

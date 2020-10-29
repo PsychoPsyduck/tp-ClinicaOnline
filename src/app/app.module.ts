@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 import { MaterialComponent } from './componentes/material/material.component';
 import { LoginComponent } from './componentes/login/login.component';
 import { RegistroComponent } from './componentes/registro/registro.component';
@@ -46,6 +47,7 @@ import { CartillaComponent } from './componentes/cartilla/cartilla.component';
 import { TurnosComponent } from './componentes/turnos/turnos.component';
 import { TurnosListadoComponent } from './componentes/turnos-listado/turnos-listado.component';
 import { UsuariosListadoComponent } from './componentes/usuarios-listado/usuarios-listado.component';
+import { NuevaEspecialidadComponent } from './componentes/nueva-especialidad/nueva-especialidad.component';
 
 
 @NgModule({
@@ -71,12 +73,14 @@ import { UsuariosListadoComponent } from './componentes/usuarios-listado/usuario
     CartillaComponent,
     TurnosComponent,
     TurnosListadoComponent,
-    UsuariosListadoComponent
+    UsuariosListadoComponent,
+    NuevaEspecialidadComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     MaterialComponent,
     ReactiveFormsModule,
     FormsModule,

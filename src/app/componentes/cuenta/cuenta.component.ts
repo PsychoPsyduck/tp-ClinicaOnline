@@ -27,7 +27,7 @@ export class CuentaComponent implements OnInit {
 
   async getUser() {
 
-    var querySnapshot  = await this.loginService.getUser("nialsande@gmail.com");
+    var querySnapshot  = await this.loginService.getUserOld("nialsande@gmail.com");
 
     this.user = querySnapshot.docs.map(function(x){
       return x.data();

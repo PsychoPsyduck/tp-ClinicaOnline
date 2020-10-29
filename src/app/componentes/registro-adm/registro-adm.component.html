@@ -2,34 +2,33 @@
 
 <mat-card>
   <mat-card-title>Registro Administrativo</mat-card-title>
-  <div mat-card-avatar class="example-header-image"></div>
-  <form action="">
+  <form [formGroup]="form" (ngSubmit)="Registrar($event)">
     <div class="row">
 
       <div class="col-md-6">
         <mat-form-field class="full-width-input">
           <mat-label>Nombre</mat-label>
-          <input matInput type="text" [(ngModel)]="nombre" name="uname">
+          <input matInput type="text" formControlName="nombre" name="uname">
         </mat-form-field>
         <br>
         <mat-form-field class="full-width-input">
           <mat-label>Apellido</mat-label>
-          <input matInput type="text" [(ngModel)]="apellido" name="usurname">
+          <input matInput type="text" formControlName="apellido" name="usurname">
         </mat-form-field>
         <br>
         <mat-form-field class="full-width-input">
           <mat-label>Mail</mat-label>
-          <input matInput type="text" [(ngModel)]="mail" name="umail">
+          <input matInput type="text" formControlName="mail" name="umail">
         </mat-form-field>
         <br>
         <mat-form-field class="full-width-input">
           <mat-label>Contraseña</mat-label>
-          <input matInput type="password" [(ngModel)]="clave" name="psw">
+          <input matInput type="password" formControlName="clave" name="psw">
         </mat-form-field>
         <br>
         <mat-form-field class="full-width-input">
           <mat-label>Repita Contraseña</mat-label>
-          <input matInput type="password" [(ngModel)]="repitaClave" name="rpsw">
+          <input matInput type="password" formControlName="repitaClave" name="rpsw">
         </mat-form-field>
         <br>
       </div>
@@ -37,41 +36,48 @@
       <div class="col-md-6">
         <mat-form-field>
           <mat-label>Tipo de usuario</mat-label>
-          <mat-select [(ngModel)]="selectedValue" name="psw" (selectionChange)="seleccionUsuario()">
+          <mat-select formControlName="rol" name="role" (selectionChange)="seleccionUsuario()">
             <mat-option *ngFor="let usuario of usuarios" [value]="usuario.value">
               {{usuario.viewValue}}
             </mat-option>
           </mat-select>
         </mat-form-field>
+
         <div class="profesionalForm" *ngIf="esProfesional" >
-          <mat-label>Profesion:</mat-label>
+          Profesional
+          <!-- <mat-form-field>
+            <mat-label>Profesion:</mat-label>
 
-          <mat-list class="lista" scroll>
-            <mat-list-item *ngFor="let item of checkbox_list">
-              <mat-checkbox
-              [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="item.checked"
-              [disabled]="item.disabled"
-              [labelPosition]="item.labelPosition"
-              (change)="list_change()"
-              >{{ item.name }}</mat-checkbox>
-            </mat-list-item>
-          </mat-list>
-
+            <mat-list class="lista" formControlName="especialidad" name="esp" scroll>
+              <mat-list-item *ngFor="let item of checkbox_list">
+                <mat-checkbox
+                [(ngModel)]="item.checked"
+                [disabled]="item.disabled"
+                [labelPosition]="item.labelPosition"
+                (change)="list_change()"
+                >{{ item.name }}</mat-checkbox>
+              </mat-list-item>
+            </mat-list>
+          </mat-form-field> -->
         </div>
+
         <div class="adminForm" *ngIf="esAdmin">
-          <div class="full-width-input">
-            <mat-label>Para dar el alta de un admin solicita captcha</mat-label><br>
+          Admin
+          <!-- <mat-form-field class="full-width-input"> -->
+            <mat-label>Terminos y condiciones</mat-label><br>
             <br>
-            <input type="file" (change)="onFileSelected($event)" disabled>
-          </div>
-          <br>
+            <!-- <input type="file" (change)="onFileSelected($event)" disabled> -->
+            <mat-checkbox formControlName="terminosCondiciones" name="tyc">
+              Seguro de vender su alma al perri?
+            </mat-checkbox>
+            <br>
+          <!-- </mat-form-field> -->
         </div>
       </div>
+
     </div>
-    
     <br>
-    <button class="example-button-row" mat-raised-button color="primary" (click)="Registrar()">Registrar</button>
+    <button class="example-button-row" mat-raised-button color="primary" type="submit">Registrar</button>
   </form>
 </mat-card>
   

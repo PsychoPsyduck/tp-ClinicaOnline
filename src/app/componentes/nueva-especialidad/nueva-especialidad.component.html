@@ -1,0 +1,21 @@
+<app-cabecera></app-cabecera>
+
+<mat-card>
+  <mat-card-title>Nueva Especialidad</mat-card-title>
+  <div mat-card-avatar class="example-header-image"></div>
+  <form [formGroup]="form">
+    <mat-form-field class="full-width-input">
+        <mat-label>Nombre</mat-label>
+        <input matInput type="text" formControlName="nombre" name="uname">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="full-width-input">
+        <mat-label>Repita Nombre</mat-label>
+        <input matInput type="text" formControlName="repitaNombre" name="uname2">
+    </mat-form-field>
+    <br>
+    <br>
+    <button class="example-button-row" mat-raised-button color="primary" (click)="Registrar()">Registrar</button>
+  </form>
+</mat-card>
+  
