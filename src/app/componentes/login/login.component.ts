@@ -106,11 +106,27 @@ export class LoginComponent implements OnInit {
     console.log("captcha: " + this.recaptcha);
   }
   
-  IngresoRapido() {
-    this.form.setValue({
-      mail: "invitado@mail.com",
-      clave: "invitado"
-    });
+  IngresoRapido(ingreso) {
+    switch (ingreso) {
+      case "admin":
+        this.form.setValue({
+          mail: "admin@mail.com",
+          clave: "123456"
+        });
+        break;
+      case "profesional":
+        this.form.setValue({
+          mail: "profesional@mail.com",
+          clave: "123456"
+        });
+        break;
+      case "usuario":
+        this.form.setValue({
+          mail: "usuario@mail.com",
+          clave: "123456"
+        });
+        break;
+    }
   }
 
   mostrarMensajeError(mensaje){

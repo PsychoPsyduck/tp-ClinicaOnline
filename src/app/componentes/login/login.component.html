@@ -28,9 +28,9 @@
   <mat-divider></mat-divider>
   <br>
   <div class="ingresoRapido">
-    <button mat-raised-button class="btn-warning" *ngIf="logeando"  (click)="IngresoRapido()">Admin</button>
-    <button mat-raised-button class="btn-warning" *ngIf="logeando"  (click)="IngresoRapido()">Profesional</button>
-    <button mat-raised-button class="btn-warning" *ngIf="logeando"  (click)="IngresoRapido()">Paciente</button>
+    <button mat-raised-button class="btn-warning" *ngIf="logeando"  (click)="IngresoRapido('admin')">Admin</button>
+    <button mat-raised-button class="btn-warning" *ngIf="logeando"  (click)="IngresoRapido('profesional')">Profesional</button>
+    <button mat-raised-button class="btn-warning" *ngIf="logeando"  (click)="IngresoRapido('usuario')">Paciente</button>
   </div>
 </mat-card>
 
