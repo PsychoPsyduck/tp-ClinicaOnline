@@ -15,8 +15,8 @@ img {
 }
 
 mat-card {
-    max-width: 80%;
-    margin: 2em auto;
+    max-width: 100%;
+    margin: 1em auto;
     text-align: center;
 }
 button {
@@ -24,8 +24,13 @@ button {
 }
 
 mat-form-field{
-    width: auto;
+    width: 90%;
     text-align: center;
     margin-left: 2.5%;
     margin-right: 2.5%;
+}
+
+.esConfirmar{
+    text-align: left;
+    margin-left: 1em;
 }

@@ -21,15 +21,15 @@ const routes: Routes = [
     [{path: '' , component: LoginComponent, data: {animation: 'Usuario'}}, 
     {path: 'registro' , component: RegistroComponent, data: {animation: 'Login'}}] 
   },
-  {path: 'home', component: HomeComponent}, //, canActivate: [AuthGuard]
-  {path: 'registro' , component: RegistroAdmComponent}, //, canActivate: [AuthGuard]
-  {path: 'pedirTurno', component: PedirTurnoComponent}, //, canActivate: [AuthGuard]
-  {path: 'turnoMedico', component: TurnoMedicoComponent}, //, canActivate: [AuthGuard]
-  {path: 'atencion', component: AtenderTurnoComponent}, //, canActivate: [AuthGuard]
-  {path: 'verUsuarios', component: UsuariosListadoComponent}, //, canActivate: [AuthGuard]
-  {path: 'verTurnos', component: TurnosListadoComponent}, //, canActivate: [AuthGuard]
-  {path: 'verCartilla', component: CartillaComponent}, //, canActivate: [AuthGuard]
-  {path: 'nuevaEspecialidad', component: NuevaEspecialidadComponent}, //, canActivate: [AuthGuard]
+  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
+  {path: 'registro' , component: RegistroAdmComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
+  {path: 'pedirTurno', component: PedirTurnoComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
+  {path: 'turnoMedico', component: TurnoMedicoComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
+  {path: 'atencion', component: AtenderTurnoComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
+  {path: 'verUsuarios', component: UsuariosListadoComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
+  {path: 'verTurnos', component: TurnosListadoComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
+  {path: 'verCartilla', component: CartillaComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
+  {path: 'nuevaEspecialidad', component: NuevaEspecialidadComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
   {path: '**', pathMatch: 'full', redirectTo: 'inicio'}
 ];
 

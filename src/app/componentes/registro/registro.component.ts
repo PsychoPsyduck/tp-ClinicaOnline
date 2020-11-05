@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Usuario } from 'src/app/clases/usuario';
+import { DataService } from 'src/app/servicios/data.service';
 //para poder hacer las validaciones
 //import { Validators, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
@@ -19,6 +21,7 @@ export class RegistroComponent implements OnInit {
     usuario:this.email
   });*/
   
+  form: FormGroup;
   nombre = '';
   apellido = '';
   mail = '';
@@ -46,64 +49,61 @@ export class RegistroComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    public loginService: LoginService) {
+    public loginService: LoginService,
+    private dataService: DataService,
+    private fb: FormBuilder) {
   }
 
   ngOnInit() {
-    this.checkbox_list = [
-      {
-        name: "Cardiologo",
-        disabled: false,
-        checked: false,
-        labelPosition: "after"
-      }, {
-        name: "Kinesiologo",
-        disabled: false,
-        checked: false,
-        labelPosition: "after"
-      }, {
-        name: "Clinico",
-        disabled: false,
-        checked: false,
-        labelPosition: "after"
-      }, {
-        name: "Audiologo",
-        disabled: false,
-        checked: false,
-        labelPosition: "after"
-      }, {
-        name: "Pediatra",
-        disabled: false,
-        checked: false,
-        labelPosition: "after"
-      }, {
-        name: "Dentista",
-        disabled: false,
-        checked: false,
-        labelPosition: "after"
-      }, {
-        name: "Cirujano",
-        disabled: false,
-        checked: false,
-        labelPosition: "after"
-      },
-    ]
+    this.form = this.fb.group({
+      nombre: ['', Validators.required],
+      apellido: ['', Validators.required],
+      mail: ['', Validators.required],
+      clave: ['', Validators.required],
+      repitaClave: ['', Validators.required],
+      // rol: ['', Validators.required],
+      // especialidad: [[], Validators.required],
+      terminosCondiciones: ['']
+    });
   }
 
   Volver() {
     this.router.navigate(['/Login']);
   }
 
-  Registrar() {
-    this.usuario.nombre = this.nombre;
-    this.usuario.apellido = this.apellido;
-    this.usuario.mail = this.mail;
-    this.usuario.contraseña = this.clave;
-    this.usuario.rol = "user";
-    
-    if (this.clave === this.repitaClave && this.terminosCondiciones == true) {
-      this.loginService.signUp(this.usuario, this.img1, this.img1);
+  Registrar(event) {
+    const { nombre, apellido, mail, clave } = this.form.value;
+    event.preventDefault();
+
+    console.log("llega")
+
+    let usuarioAux = {
+      nombre: nombre,
+      apellido: apellido,
+      mail: mail,
+      clave: clave
     }
+
+    let usuario = new Usuario(nombre, apellido, 33, mail, clave, "usuario");
+
+    if (this.form.valid) {
+      console.log(this.form.value);
+      this.loginService.registroUsuario(mail, clave, this.img1, this.img1, usuario).then(res => {
+          console.log(res)
+      }).catch(err => console.log(err));
+    }
+
+
+    // this.usuario.nombre = usuario.nombre;
+    // this.usuario.apellido = usuario.apellido;
+    // this.usuario.mail = usuario.mail;
+    // this.usuario.contraseña = usuario.clave;
+    // this.usuario.rol = "user";
+    // this.loginService.signUp(this.usuario, this.img1, this.img1);
+    
+    // if (this.clave === this.repitaClave && this.terminosCondiciones == true) {
+      
+    // }
   }
 
   onFileSelected(event) {

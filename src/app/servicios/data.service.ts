@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { LoginService } from './login.service';
 import { AuthService } from '../auth/auth.service';
 import * as firebase from "firebase/app";
+import { Usuario } from '../clases/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,6 @@ export class DataService {
     public http: HttpClient,
     public db: AngularFirestore,
     public afs: AngularFireStorage,
-    private loginService: LoginService,
     private authService: AuthService,
     // public toastController: ToastController
   ) {}
@@ -30,6 +30,46 @@ export class DataService {
           let docum = doc.data();
           let any = docum;
           lista.push(any);
+      });
+    })
+    return lista;
+  }
+
+  getAll2(path:string) {
+    return this.db.collection(path).valueChanges();
+  }
+
+  getAll3(path: string, tipo: string, especialidad: string) {
+    var lista = Array<any>();
+    firebase.firestore().collection(path).get()
+    .then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+          let docum = doc.data();
+          if(docum.rol == tipo) {
+            docum.especialidad.forEach(element => {
+              if(element == especialidad) {
+                let any = docum;
+                lista.push(any);
+              }
+            });
+          }
+      });
+    })
+    return lista;
+  }
+
+  getAll4(path: string, fecha: string) {
+    var lista = Array<any>();
+    firebase.firestore().collection(path).get()
+    .then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        let docum = doc.data();
+        docum.fecha.forEach(element => {
+          if(element == fecha) {
+            let any = docum;
+            lista.push(any);
+          }
+        });
       });
     })
     return lista;

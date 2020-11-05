@@ -3,6 +3,8 @@ import { Turno } from 'src/app/clases/turno';
 import { TurnoService } from '../../servicios/turno.service';
 import { UsuarioService } from '../../servicios/usuario.service';
 import { Profesional } from '../../clases/profesional'
+import { DataService } from 'src/app/servicios/data.service';
+import { LoginService } from 'src/app/servicios/login.service';
 
 interface turnoHora {
   value: string;
@@ -17,12 +19,15 @@ export class PedirTurnoComponent implements OnInit {
 
   selectedValueProf: string;
   selectedValueHora: string;
-  turnos: Turno[];
   turno: Turno;
 
+  usuario = null;
+  especialidad = null;
 
   constructor(public turnoService: TurnoService,
-              public usuarioService: UsuarioService) {
+              private dataService: DataService,
+              public usuarioService: UsuarioService,
+              private loginService: LoginService) {
 
                 this.selectedValueProf = "";
                 this.selectedValueHora = "";
@@ -30,11 +35,17 @@ export class PedirTurnoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.usuario = this.loginService.usuario
     // this.consultaDisponible();
-    this.cargarProfesionales();
+    // this.cargarProfesionales();
   }
 
-  profesionales: any;
+  profesionales = null;
+  profesional = null;
+  dias = null;
+  dia = null;
+  turnos = null;
+  hora = null;
 
   turnoshoras: turnoHora[] = [
           {value: '8:00'},
@@ -85,9 +96,56 @@ export class PedirTurnoComponent implements OnInit {
        }
   }
 
-  async cargarProfesionales() {
-    this.profesionales = await this.usuarioService.get();
-    console.log("this.profesionales");
-    console.log(this.profesionales);
+  // async cargarProfesionales() {
+  //   this.profesionales = await this.usuarioService.get();
+  //   console.log("this.profesionales");
+  //   console.log(this.profesionales);
+  // }
+
+
+
+  enviarEsp(especialidad) {
+    this.especialidad = especialidad;
+    this.profesionales = this.dataService.getAll3("usuarios", "profesional", especialidad);
+  }
+  
+  enviarProfesional(usuario) {
+    this.profesional = usuario;
+    this.dias = usuario.dia;
+    console.log(this.dias);
+  }
+
+  enviarDia(dia) {
+    this.dia = dia;
+    // this.turnos = this.dataService.getAll4("turnos", dia);
+    console.log(this.dia);
+  }
+
+  enviarHora(hora) {
+    this.hora = hora;
+
+    console.log(this.hora);
+
+    this.turno.especialidad = this.especialidad;
+    this.turno.medico = this.profesional;
+    this.turno.fecha = this.dia;
+    this.turno.horario = hora;
+  }
+
+  enviarTurno(turno: Turno) {
+    let turnoAux = {
+      medico: turno.medico,
+      duracion: turno.duracion,
+      fecha: turno.fecha,
+      horario: turno.horario,
+      especialidad: turno.especialidad, 
+      resenia: '',
+      paciente: this.usuario,
+      estado: '0',
+
+    }
+    
+    console.log(turnoAux);
+    this.dataService.crear('turnos', turnoAux);
   }
 }

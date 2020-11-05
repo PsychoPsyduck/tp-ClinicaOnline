@@ -48,6 +48,7 @@ import { TurnosComponent } from './componentes/turnos/turnos.component';
 import { TurnosListadoComponent } from './componentes/turnos-listado/turnos-listado.component';
 import { UsuariosListadoComponent } from './componentes/usuarios-listado/usuarios-listado.component';
 import { NuevaEspecialidadComponent } from './componentes/nueva-especialidad/nueva-especialidad.component';
+import { BuscarComponent } from './componentes/pedir-turno/buscar/buscar.component';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import { NuevaEspecialidadComponent } from './componentes/nueva-especialidad/nue
     TurnosComponent,
     TurnosListadoComponent,
     UsuariosListadoComponent,
-    NuevaEspecialidadComponent
+    NuevaEspecialidadComponent,
+    BuscarComponent
   ],
   imports: [
     BrowserModule,

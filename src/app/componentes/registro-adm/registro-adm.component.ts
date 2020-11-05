@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { Usuario } from 'src/app/clases/usuario';
 import { slideInAnimation } from 'src/app/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DataService } from 'src/app/servicios/data.service';
 
 interface Food {
   value: string;
@@ -29,9 +30,7 @@ export class RegistroAdmComponent implements OnInit {
   mail = '';
   clave= '';
   repitaClave= '';
-  // terminosCondiciones: boolean;
-  img1 = null;
-  img2;
+  // logeando=true;
 
   esProfesional = false;
   esAdmin = false;
@@ -39,34 +38,36 @@ export class RegistroAdmComponent implements OnInit {
   master_checked: boolean = false;
   master_indeterminate: boolean = false;
   checkbox_list = [];
-  checked_list = [];
   selectedValue;
 
   usuarios = [
     {value: 'admin', viewValue: 'Administrador'},
     {value: 'profesional', viewValue: 'Profesional'}
   ];
+  
+  dias: string[] = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+
 
   usuario: Usuario = new Usuario(this.nombre, this.apellido, 40, this.mail, this.clave, '');
+
+  ocultarVerificar: boolean;
+  Tiempo: number;
+  repetidor:any;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     public loginService: LoginService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private dataService: DataService) {
+      this.Tiempo=5; 
+      this.ocultarVerificar=false;
+      
+      
   }
 
-  
-
   ngOnInit() {    
-    this.checkbox_list = [
-      {
-        name: "Cardiologo",
-        disabled: false,
-        checked: false,
-        labelPosition: "after"
-      }
-    ]
+    this.checkbox_list = this.getProfesiones();
 
     this.form = this.fb.group({
       nombre: ['', Validators.required],
@@ -75,7 +76,8 @@ export class RegistroAdmComponent implements OnInit {
       clave: ['', Validators.required],
       repitaClave: ['', Validators.required],
       rol: ['', Validators.required],
-      especialidad: ['', Validators.required],
+      especialidad: [[], Validators.required],
+      dia: [[], Validators.required],
       terminosCondiciones: ['']
     });
 
@@ -104,20 +106,35 @@ export class RegistroAdmComponent implements OnInit {
       });
   }
 
-  Volver() {
-    this.router.navigate(['/Login']);
-  }
-
   Registrar(event) {
+    const { nombre, apellido, especialidad, mail, clave, dia } = this.form.value;
     event.preventDefault();
 
-    if (this.form.valid) {
-      console.log(this.form.value);
-    }
-  }
+    console.log("llega")
 
-  onFileSelected(event) {
-    this.img1 = event.target.files[0];
+    let usuario = new Usuario(nombre, apellido, 33, mail, clave, 'profesional');
+    usuario.especialidad = especialidad;
+    usuario.dia = dia;
+    console.log(usuario.dia);
+
+    if (this.form.valid) {
+      this.ocultarVerificar=true;
+      console.log(this.form.value);
+      this.loginService.registroProfesional(usuario).then(res => {
+          console.log(res)
+      }).catch(err => console.log(err));
+
+      this.repetidor = setInterval(()=>{ 
+        this.Tiempo--;
+        if(this.Tiempo == 0 ) {
+          clearInterval(this.repetidor);
+          this.ocultarVerificar=false;
+          this.Tiempo=4;
+          this.limpiarCampos();
+            // this.msjError = "Error al iniciar sesion. Verifique los datos";
+        }
+      }, 900);
+    }
   }
 
   seleccionUsuario() {
@@ -132,28 +149,25 @@ export class RegistroAdmComponent implements OnInit {
     }
   }
 
-  list_change(){
-    let checked_count = 0;
-    //Get total checked items
-    for (let value of Object.values(this.checkbox_list)) {
-      if(value.checked) {
-        checked_count++;
-        this.checked_list.push(value);
-        console.log(checked_count);
-      }
-    }
+  getProfesiones() {
+    return this.dataService.getAll("especialidades");
+  }
 
-    if(checked_count>0 && checked_count<this.checkbox_list.length){
-      // If some checkboxes are checked but not all; then set Indeterminate state of the master to true.
-      this.master_indeterminate = true;
-    }else if(checked_count == this.checkbox_list.length){
-      //If checked count is equal to total items; then check the master checkbox and also set Indeterminate state to false.
-      this.master_indeterminate = false;
-      this.master_checked = true;
-    }else{
-      //If none of the checkboxes in the list is checked then uncheck master also set Indeterminate to false.
-      this.master_indeterminate = false;
-      this.master_checked = false;
-    }
+  limpiarCampos(){
+    this.form.setValue({
+      nombre: '',
+      apellido: '', 
+      especialidad: null, 
+      mail: '', 
+      clave: '',
+      repitaClave: '',
+      rol: '',
+      terminosCondiciones: '',
+      dia: null
+    });
+
+    this.form.reset();
+    this.esAdmin = false;
+    this.esProfesional = false;
   }
 }

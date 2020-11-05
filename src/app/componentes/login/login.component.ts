@@ -59,7 +59,11 @@ export class LoginComponent implements OnInit {
       clave: ['', Validators.required]
     });
 
-    this.usuarios = this.dataService.getAll("usuarios");
+    // this.usuarios = this.dataService.getAll("usuarios");
+    this.dataService.getAll2("usuarios").subscribe(res => {
+
+      this.usuarios = res
+    });
   }
 
   Entrar() {
@@ -99,6 +103,17 @@ export class LoginComponent implements OnInit {
         console.log("es perri");
       }
     }
+
+    this.repetidor = setInterval(()=>{ 
+        
+      this.Tiempo--;
+      if(this.Tiempo==0 ) {
+        clearInterval(this.repetidor);
+        this.ocultarVerificar=false;
+        this.Tiempo=4;
+          // this.msjError = "Error al iniciar sesion. Verifique los datos";
+      }
+    }, 900);
   }
 
   resolved(captchaResponse: any) {

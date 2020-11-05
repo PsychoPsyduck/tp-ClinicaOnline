@@ -1,0 +1,60 @@
+<mat-card>
+    <mat-card-title>{{titulo}}</mat-card-title>
+    <br>
+    <form [formGroup]="form" (ngSubmit)="Buscar($event)">
+
+        <div [hidden]="!esProfesion">
+            <mat-form-field>
+                <mat-label>Especialidad:</mat-label>
+                <mat-select formControlName="especialidad" name="especialidad" (selectionChange)="seleccionProfesion()">
+                    <mat-option *ngFor="let especialidad of especialidades" [value]="especialidad.nombre">
+                        {{especialidad.nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div [hidden]="!esProfesional">
+            <mat-form-field>
+                <mat-label>Profesional:</mat-label>
+                <mat-select formControlName="profesional" name="profesional" (selectionChange)="seleccionProfesion()">
+                    <mat-option *ngFor="let profesional of profesionalesInp" [value]="profesional">
+                        Dr. {{profesional.apellido}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div [hidden]="!esDia">
+            <mat-form-field color="accent">
+                <mat-label>Fecha:</mat-label>
+                <input matInput formControlName="dia" [min]='today' [matDatepickerFilter]="myFilter" [matDatepicker]="picker1" disabled>
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1 disabled="false" disablePast></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div [hidden]="!esHora">
+            <mat-form-field>
+                <mat-label>Hora:</mat-label>
+                <mat-select formControlName="hora">
+                    <mat-option *ngFor="let hora of turnoshoras" [value]="hora.value">
+                        {{hora.value}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="esConfirmar" [hidden]="!esConfirmar">
+            <mat-card-subtitle><b>Especialidad:</b> {{turno.especialidad}}</mat-card-subtitle>
+            <mat-card-subtitle><b>Profesional:</b> Dr. {{turno.medico}}</mat-card-subtitle>
+            <mat-card-subtitle><b>Dia:</b> {{turno.fecha}}</mat-card-subtitle>
+            <mat-card-subtitle><b>Hora:</b> {{turno.horario}}</mat-card-subtitle>
+        </div>
+
+        <button [hidden]="ocultarVerificar" mat-raised-button color="primary" type="submit">{{boton}}</button>
+        <button [hidden]="!ocultarVerificar" mat-raised-button color="primary" ><i class="fa fa-spinner fa-spin"></i> Registrando</button>
+        
+    </form>
+
+</mat-card>

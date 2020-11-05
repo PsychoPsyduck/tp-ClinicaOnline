@@ -16,17 +16,20 @@ import "firebase/auth";
 import "firebase/firestore";
 import { rejects } from 'assert';
 import { map } from 'rxjs/operators';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  private usuario:Observable<firebase.User>;
+  usuario;
+
 
   constructor(public router: Router,
               public uploadService: UploadService,
               public angularFireAuth:AngularFireAuth,
+              private dataService: DataService,
               private afs: AngularFirestore) {
               this.usuario = this.angularFireAuth.authState;
                }
@@ -44,20 +47,24 @@ export class LoginService {
 
     firebase.auth().createUserWithEmailAndPassword(usuario.mail, usuario.contraseña)
     .then(function(credencial) {
-      dbRef.collection('usuarios').add({
-        uid: credencial.user.uid,
-        nombre: usuario.nombre,
-        apellido: usuario.apellido,
-        mail: usuario.mail,
-        contraseña: usuario.contraseña,
-        rol: usuario.rol,
-        img1: usuario.img1,
-        img2: usuario.img2
-      })
+      this.uploadImg(usuario, img1, img2)
       .then(function (docRef) {
-        this.uploadImg(usuario, img1, img2);
-        console.log("Bien");
-      });
+        // ;
+        // console.log("Bien");
+
+        dbRef.collection('usuarios').add({
+          uid: credencial.user.uid,
+          nombre: usuario.nombre,
+          apellido: usuario.apellido,
+          mail: usuario.mail,
+          contraseña: usuario.contraseña,
+          rol: usuario.rol,
+          img1: usuario.img1,
+          img2: usuario.img2
+        })
+      })
+
+
       credencial.user.getIdToken()
         .then(function (token) {
         localStorage.setItem('token', token);
@@ -145,21 +152,60 @@ export class LoginService {
     })
   }
 
-  registroUsuario(email, password) {
+  registroUsuario(email, password, img1, img2, usuario: Usuario) {
+    let refImg1;
+    let refImg2;
+
+    let usuarioCrear = {
+      nombre: usuario.nombre,
+      apellido: usuario.apellido,
+      mail: usuario.mail,
+      clave: usuario.contraseña,
+      img1: '',
+      img2: '',
+      rol: "usuario"
+    }
+
     return firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((result) => {
         this.SendVerificationMail(); // Sending email verification notification, when new user registers
+        this.uploadService.subirArchivo(usuario.mail+"_img1",img1,{nombre:usuario.nombre,apellido:usuario.apellido}).then((img1)=>{
+          this.uploadService.subirArchivo(usuario.mail+"_img2",img2,{nombre:usuario.nombre,apellido:usuario.apellido}).then(img2=>{
+            img1.ref.getDownloadURL().then(data1=>{
+              usuarioCrear.img1=data1;
+              img2.ref.getDownloadURL().then(data2=>{
+                usuarioCrear.img2=data2;
+                this.dataService.crear('usuarios', usuarioCrear);
+              });
+            });
+          });
+        });
       }).catch((error) => {
         window.alert(error.message)
-      })
+      });
   }
 
   registroAdmin() {
-
+    
   }
 
-  registroProfesional() {
+  registroProfesional(usuario: Usuario) {
 
+    let usuarioCrear = {
+      nombre: usuario.nombre,
+      apellido: usuario.apellido,
+      mail: usuario.mail,
+      clave: usuario.contraseña,
+      rol: usuario.tipo,
+      especialidad: usuario.especialidad,
+      dia: usuario.dia,
+    }
+
+    return firebase.auth().createUserWithEmailAndPassword(usuarioCrear.mail, usuarioCrear.clave).then((result) => {
+      this.dataService.crear('usuarios', usuarioCrear);
+    }).catch((error) => {
+      window.alert(error.message)
+    });
   }
 
   ingresoUsuario(email, password) {
@@ -171,6 +217,7 @@ export class LoginService {
           window.alert('Por favor valide su mail.');
           reject();
         } else {
+          this.getUser(email);
           resolve(result);
         }
       }).catch((error) => {
@@ -190,5 +237,11 @@ export class LoginService {
         reject();
       })
     });
+  }
+
+  getUser(email: string) {
+    this.dataService.traerUno("usuarios", "mail", email).then(res => {
+      this.usuario = res;
+    })
   }
 }

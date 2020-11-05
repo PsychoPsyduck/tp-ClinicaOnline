@@ -3,33 +3,33 @@
 <mat-card>
   <mat-card-title>Registro</mat-card-title>
   <div mat-card-avatar class="example-header-image"></div>
-  <form action="">
+  <form [formGroup]="form" (ngSubmit)="Registrar($event)">
     <div class="row">
 
       <div class="col-md-6">
         <mat-form-field class="full-width-input">
           <mat-label>Nombre</mat-label>
-          <input matInput type="text" [(ngModel)]="nombre" name="uname">
+          <input matInput type="text" formControlName="nombre" name="uname">
         </mat-form-field>
         <br>
         <mat-form-field class="full-width-input">
           <mat-label>Apellido</mat-label>
-          <input matInput type="text" [(ngModel)]="apellido" name="usurname">
+          <input matInput type="text" formControlName="apellido" name="usurname">
         </mat-form-field>
         <br>
         <mat-form-field class="full-width-input">
           <mat-label>Mail</mat-label>
-          <input matInput type="text" [(ngModel)]="mail" name="umail">
+          <input matInput type="text" formControlName="mail" name="umail">
         </mat-form-field>
         <br>
         <mat-form-field class="full-width-input">
           <mat-label>Contraseña</mat-label>
-          <input matInput type="password" [(ngModel)]="clave" name="psw">
+          <input matInput type="password" formControlName="clave" name="psw">
         </mat-form-field>
         <br>
         <mat-form-field class="full-width-input">
           <mat-label>Repita Contraseña</mat-label>
-          <input matInput type="password" [(ngModel)]="repitaClave" name="rpsw">
+          <input matInput type="password" formControlName="repitaClave" name="rpsw">
         </mat-form-field>
         <br>
       </div>
@@ -47,10 +47,10 @@
         <br>
       </div>
     </div>
-    <mat-checkbox class="example-margin" [(ngModel)]="terminosCondiciones" name="chck">Acepto terminos y condiciones.</mat-checkbox>
+    <mat-checkbox class="example-margin" formControlName="terminosCondiciones" name="chck">Acepto terminos y condiciones.</mat-checkbox>
     <br>
     <a class="example-button-row" routerLink="/inicio" routerLinkActive="active" *ngIf="esPaciente" mat-raised-button color="warn">Volver</a>
-    <button class="example-button-row" mat-raised-button color="primary" (click)="Registrar()">Registrar</button>
+    <button class="example-button-row" mat-raised-button color="primary" type="submit">Registrar</button>
   </form>
 </mat-card>
   
