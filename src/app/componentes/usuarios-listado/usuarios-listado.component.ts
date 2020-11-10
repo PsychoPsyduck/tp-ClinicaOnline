@@ -9,6 +9,7 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 export class UsuariosListadoComponent implements OnInit {
 
   listadoUsuarios;
+  
 
   constructor(public usuarioService: UsuarioService) { }
 

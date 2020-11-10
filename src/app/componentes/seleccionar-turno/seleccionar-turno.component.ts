@@ -16,16 +16,16 @@ export class SeleccionarTurnoComponent implements OnInit {
 
   ngOnInit(): void {
   
-    this.traerTurnosMedico("arya@gmail.com");
+    // this.traerTurnosMedico("arya@gmail.com");
   }
 
-  traerTurnosMedico(medico: string) {
-    this.listado = this.turnoService.turnosPorMedico(medico);
-    // this.turnos = JSON.parse(localStorage.getItem("turnos"));
-    console.log("this.turnos");
-    console.log(this.listado);
+  // traerTurnosMedico(medico: string) {
+  //   this.listado = this.turnoService.turnosPorMedico(medico);
+  //   // this.turnos = JSON.parse(localStorage.getItem("turnos"));
+  //   console.log("this.turnos");
+  //   console.log(this.listado);
 
-  }
+  // }
 
   atender( turno ){
     this.turnoSeleccionado.emit(turno);

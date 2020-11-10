@@ -1,39 +1,78 @@
 <mat-toolbar color="primary">
-    <section>
-      <button mat-button class="logo" (click)="Router('Home')">
-        <img src="/assets/img/logo.png" alt="">
-        <span>    Clinica</span>
+  <section *ngIf='esAdmin'>
+    <button mat-button class="logo" (click)="Router('Home')">
+      <img src="/assets/img/logo.png" alt="">
+      <span>    Clinica</span>
+    </button>
+
+    <button mat-button class="logo" (click)="Router('registro')">
+      <span>Registro</span>
+    </button>
+    <button mat-button class="logo" (click)="Router('listadoUsuarios')">
+      <span>Listado Usuarios</span>
+    </button>
+    <button mat-button class="logo" (click)="Router('nuevaEspecialidad')">
+      <span>Nueva Especialidad</span>
+    </button>
+    
+    <button class="MenuButton" mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="Router('Salir')">
+        <mat-icon>power_settings_new</mat-icon>
+        <span>LogOut</span>
       </button>
-      <button mat-button class="logo" (click)="Router('registro')">
-        <span>Registro</span>
+    </mat-menu>
+  </section>
+
+  <section *ngIf='esProfesional'>
+    <button mat-button class="logo" (click)="Router('Home')">
+      <img src="/assets/img/logo.png" alt="">
+      <span>    Clinica</span>
+    </button>
+
+    <button mat-button class="logo" (click)="Router('listadoTurnos')">
+      <span>Listado Turnos</span>
+    </button>
+    <button mat-button class="logo" (click)="Router('listadoCartilla')">
+      <span>Listado Cartilla</span>
+    </button>
+
+    <!-- <div class="MenuButton"> -->
+      <button class="MenuButton" mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
+        <mat-icon>menu</mat-icon>
       </button>
-      <button mat-button class="logo" (click)="Router('pedir')">
-        <span>Pedir Turno</span>
-      </button>
-      <button mat-button class="logo" (click)="Router('listadoTurnos')">
-        <span>Listado Turnos</span>
-      </button>
-      <button mat-button class="logo" (click)="Router('listadoUsuarios')">
-        <span>Listado Usuarios</span>
-      </button>
-      <button mat-button class="logo" (click)="Router('listadoCartilla')">
-        <span>Listado Cartilla</span>
-      </button>
-      <button mat-button class="logo" (click)="Router('nuevaEspecialidad')">
-        <span>Nueva Especialidad</span>
-      </button>
-  
-      <div class="MenuButton">
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
-          <mat-icon>menu</mat-icon>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="Router('Salir')">
+          <mat-icon>power_settings_new</mat-icon>
+          <span>LogOut</span>
         </button>
-      
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="Router('Salir')">
-            <mat-icon>power_settings_new</mat-icon>
-            <span>LogOut</span>
-          </button>
-        </mat-menu>
-      </div>
-    </section>
-  </mat-toolbar>
+      </mat-menu>
+    <!-- </div> -->
+  </section>
+  
+  <section *ngIf='esUsuario'>
+    <button mat-button class="logo" (click)="Router('Home')">
+      <img src="/assets/img/logo.png" alt="">
+      <span>    Clinica</span>
+    </button>
+
+    <button mat-button class="logo" (click)="Router('listadoCartilla')">
+      <span>Listado Cartilla</span>
+    </button>
+    <button mat-button class="logo" (click)="Router('pedir')">
+      <span>Pedir Turno</span>
+    </button>
+
+    <button class="MenuButton" mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="Router('Salir')">
+        <mat-icon>power_settings_new</mat-icon>
+        <span>LogOut</span>
+      </button>
+    </mat-menu>
+  </section>
+</mat-toolbar>

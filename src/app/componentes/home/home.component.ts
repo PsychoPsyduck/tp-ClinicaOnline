@@ -13,7 +13,34 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  turnos(){
-    this.router.navigate(['pedirTurno']);
+  Router(tipo: string) {
+    switch (tipo) {
+      case 'Home':
+          this.router.navigate(['/home']);
+        break;
+      case 'registro':
+          this.router.navigate(['/registro']);
+        break;
+      case 'pedir':
+          this.router.navigate(['/pedirTurno']);
+        break;
+      case 'listadoUsuarios':
+          this.router.navigate(['/verUsuarios']);
+        break;
+      case 'listadoTurnos':
+          this.router.navigate(['/verTurnos']);
+        break;
+      case 'listadoCartilla':
+          this.router.navigate(['/verCartilla']);
+        break;
+      case 'nuevaEspecialidad':
+          this.router.navigate(['/nuevaEspecialidad']);
+        break;
+      // case 'Salir':
+      //     this.loginService.usuario = null;
+      //     this.loginService.logOut();
+      //     this.router.navigate([''])
+      //   break;
+    }
   }
 }

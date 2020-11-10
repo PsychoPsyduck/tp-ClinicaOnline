@@ -75,6 +75,23 @@ export class DataService {
     return lista;
   }
 
+  getAll5(path: string, mail: string) {
+    var lista = Array<any>();
+
+    firebase.firestore().collection(path).get()
+    .then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+
+        let docum = doc.data();
+        if(docum.medico.mail == mail) {
+          docum.uid = doc.id;
+          lista.push(docum);
+        }
+      });
+    })
+    return lista;
+  }
+
   traerColeccion(path: string, query: QueryFn = null): Observable<DocumentChangeAction<unknown>[]> {
     if(query == null)
       return this.db.collection(path).snapshotChanges();
@@ -136,6 +153,12 @@ export class DataService {
 
   handleError(error) {
     // this.mostrarToast(error);
+  }
+
+  addUid(path, uid) {
+    return this.db.collection(path).doc(uid).update({
+      uid: uid,
+    }) 
   }
 
   // subirImagenYTraerURl(path: string, imagenBase64: string): Promise<any> {

@@ -14,7 +14,7 @@
       <input matInput type="password" formControlName="clave" name="psw">
     </mat-form-field>
     <br>
-    <div class="recaptcha">
+    <div class="recaptcha" [hidden]="desabilitar">
       <re-captcha (resolved)="resolved($event)" siteKey="6LdHjqMZAAAAAMkK2810kzuViD35R3xooQGRi-P4"></re-captcha>
     </div>
     <br>
@@ -32,6 +32,14 @@
     <button mat-raised-button class="btn-warning" *ngIf="logeando"  (click)="IngresoRapido('profesional')">Profesional</button>
     <button mat-raised-button class="btn-warning" *ngIf="logeando"  (click)="IngresoRapido('usuario')">Paciente</button>
   </div>
+  <div class="ingresoRapido">
+    <br>
+    <mat-slide-toggle [(ngModel)]="desabilitar" name="desabilitar">Desabilitar reCaptcha</mat-slide-toggle>
+  </div>
 </mat-card>
 
 <app-footer></app-footer>
+
+
+<!-- <app-modal-turno [cancelar]="cancelarPro" [rechazar]="rechazarPro" [user]="usuario" [turno]="turnoSeleccionado"[mostrar]="mostrarModal" (eventoMostrarModal)="mostrarEncuesta($event)" (eventoJustifacion)="justificacion($event)"></app-modal-turno> -->
+<app-modal-turno [mostrar]="mostrarModal"></app-modal-turno>

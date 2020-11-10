@@ -29,15 +29,16 @@ export class LoginComponent implements OnInit {
   logeando=true;
   ProgresoDeAncho:string;
 
-
   usuarios;
-
 
   ocultarVerificar: boolean;
   Tiempo: number;
   repetidor:any;
 
   recaptcha: any;
+  desabilitar = false;
+  
+  mostrarModal:boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -70,7 +71,7 @@ export class LoginComponent implements OnInit {
     const { mail, clave } = this.form.value;
     let rol;
 
-    if(mail && clave && this.recaptcha) {
+    if((mail && clave && this.recaptcha) || (mail && clave && this.desabilitar)) {
       this.ocultarVerificar=true;
       
       this.usuarios.forEach(element => {
@@ -82,20 +83,24 @@ export class LoginComponent implements OnInit {
       if(rol == "profesional") {
 
         this.loginService.ingresoInstitucional(mail, clave).then( res => {
-          console.log("Esto es usuario: " + res);
           this.router.navigate(['/home']);
           this.authService.login().subscribe(resp => {this.router.navigate(['home'])
-            console.log("Esto es prof: " + resp)
           });
         }).catch(err => console.log(err));
         
+      } else if (rol == "admin") {
+
+        this.loginService.ingresoInstitucional(mail, clave).then( res => {
+          this.router.navigate(['/home']);
+          this.authService.login().subscribe(resp => {this.router.navigate(['home'])
+          });
+        }).catch(err => console.log(err));
+
       } else if (rol == "usuario") {
 
         this.loginService.ingresoUsuario(mail, clave).then( res => {
-          console.log("Esto es usuario: " + res);
           this.router.navigate(['/home']);
           this.authService.login().subscribe(resp => {this.router.navigate(['home'])
-            console.log("Esto es usuario: " + resp)
           });
         }).catch(err => console.log(err));
 
@@ -130,14 +135,15 @@ export class LoginComponent implements OnInit {
         });
         break;
       case "profesional":
-        this.form.setValue({
-          mail: "profesional@mail.com",
-          clave: "123456"
-        });
+        // this.form.setValue({
+        //   mail: "profesional@mail.com",
+        //   clave: "123456"
+        // });
+        this.mostrar(true);
         break;
       case "usuario":
         this.form.setValue({
-          mail: "usuario@mail.com",
+          mail: "usuario@gmailup.com",
           clave: "123456"
         });
         break;
@@ -146,5 +152,11 @@ export class LoginComponent implements OnInit {
 
   mostrarMensajeError(mensaje){
     // this.toastr.error("Ocurrio un error: "+mensaje);
+  }
+
+  mostrar(dato:boolean)
+  {
+    this.mostrarModal = dato;
+    console.log(this.mostrarModal)
   }
 }

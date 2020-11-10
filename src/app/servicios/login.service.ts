@@ -209,6 +209,7 @@ export class LoginService {
   }
 
   ingresoUsuario(email, password) {
+    this.getUser(email);
     return new Promise((resolve, reject) => { 
       firebase.auth().signInWithEmailAndPassword(email, password)
       .then((result) => {
@@ -217,7 +218,6 @@ export class LoginService {
           window.alert('Por favor valide su mail.');
           reject();
         } else {
-          this.getUser(email);
           resolve(result);
         }
       }).catch((error) => {
@@ -228,6 +228,7 @@ export class LoginService {
   }
 
   ingresoInstitucional(email, password) {
+    this.getUser(email);
     return new Promise((resolve, reject) => { 
       firebase.auth().signInWithEmailAndPassword(email, password)
       .then((result) => {

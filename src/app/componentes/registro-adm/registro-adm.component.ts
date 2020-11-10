@@ -76,8 +76,8 @@ export class RegistroAdmComponent implements OnInit {
       clave: ['', Validators.required],
       repitaClave: ['', Validators.required],
       rol: ['', Validators.required],
-      especialidad: [[], Validators.required],
-      dia: [[], Validators.required],
+      especialidad: [[]],
+      dia: [[]],
       terminosCondiciones: ['']
     });
 
@@ -86,19 +86,22 @@ export class RegistroAdmComponent implements OnInit {
 
   setUserRolValidators() {
     const especialidadControl = this.form.get('especialidad');
+    const diaControl = this.form.get('dia');
     const terminosCondicionesControl = this.form.get('terminosCondiciones');
 
     this.form.get('rol').valueChanges
       .subscribe(rol => {
-
+        
         if (rol === 'profesional') {
           especialidadControl.setValidators([Validators.required]);
+          diaControl.setValidators([Validators.required]);
           terminosCondicionesControl.setValidators(null);
         }
 
         if (rol === 'admin') {
           especialidadControl.setValidators(null);
-          terminosCondicionesControl.setValidators([Validators.required]);
+          diaControl.setValidators(null);
+          // terminosCondicionesControl.setValidators([Validators.required]);
         }
 
         especialidadControl.updateValueAndValidity();
@@ -107,17 +110,36 @@ export class RegistroAdmComponent implements OnInit {
   }
 
   Registrar(event) {
-    const { nombre, apellido, especialidad, mail, clave, dia } = this.form.value;
+    const { nombre, apellido, especialidad, mail, clave, dia, rol } = this.form.value;
     event.preventDefault();
 
     console.log("llega")
 
-    let usuario = new Usuario(nombre, apellido, 33, mail, clave, 'profesional');
+    let usuario = new Usuario(nombre, apellido, 33, mail, clave, rol);
     usuario.especialidad = especialidad;
     usuario.dia = dia;
     console.log(usuario.dia);
 
-    if (this.form.valid) {
+    console.log(this.form.valid)
+
+    if (rol == "profesional" && this.form.valid) {
+      this.ocultarVerificar=true;
+      console.log(this.form.value);
+      this.loginService.registroProfesional(usuario).then(res => {
+          console.log(res)
+      }).catch(err => console.log(err));
+
+      this.repetidor = setInterval(()=>{ 
+        this.Tiempo--;
+        if(this.Tiempo == 0 ) {
+          clearInterval(this.repetidor);
+          this.ocultarVerificar=false;
+          this.Tiempo=4;
+          this.limpiarCampos();
+            // this.msjError = "Error al iniciar sesion. Verifique los datos";
+        }
+      }, 900);
+    } else if (rol == "admin" && nombre != "" && apellido != "" && mail != "" && clave != "") {
       this.ocultarVerificar=true;
       console.log(this.form.value);
       this.loginService.registroProfesional(usuario).then(res => {
@@ -139,7 +161,7 @@ export class RegistroAdmComponent implements OnInit {
 
   seleccionUsuario() {
     const { rol } = this.form.value;
-
+    // this.setUserRolValidators();
     if (rol == "admin") {
       this.esAdmin = true;
       this.esProfesional = false

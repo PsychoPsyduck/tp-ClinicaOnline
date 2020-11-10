@@ -71,30 +71,7 @@ export class PedirTurnoComponent implements OnInit {
           {value: '18:00'},
           {value: '18:30'}];
 
-  pedirTurno() {
-    console.log("profesional seleccionado: " + this.selectedValueProf);
-
-    this.turno.medico = this.selectedValueProf;
-    this.turno.duracion = 0;
-    this.turno.fecha = "20200616";
-    this.turno.horario=this.selectedValueHora;
-    this.turno.especialidad = "Clinico";
-    this.turno.resenia = "";
-    this.turno.paciente = "nialsande@gmail.com";
-    this.turno.estado = "Pendiente";
-
-    this.turnoService.crear(this.turno);
-  }
-
-  consultaDisponible() {
-     let response = this.turnoService.buscarDisponibilidad("frontale@mail.com", "16062020", "12:00")
-       if(response) {
-         console.log("Disponible");
-       }
-       else {
-         console.log("No Disponible");
-       }
-  }
+  
 
   // async cargarProfesionales() {
   //   this.profesionales = await this.usuarioService.get();
