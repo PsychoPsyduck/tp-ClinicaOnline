@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from 'src/app/servicios/usuario.service';
+import { DataService } from 'src/app/servicios/data.service';
 
 @Component({
   selector: 'app-cartilla',
@@ -8,16 +8,23 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 })
 export class CartillaComponent implements OnInit {
 
-  listadoProfesionales;
+  listadoProfesionales = [];
+  listaAux;
 
-  constructor(public usuarioService: UsuarioService) { }
+  constructor(public dataService: DataService) { }
 
   ngOnInit() {
     
-    this.cargarProfesionales();
+    this.dataService.getAll2("usuarios").subscribe(res => {
+      this.listaAux = res;
+
+      this.listaAux.forEach(element => {
+        if(element.rol == "profesional") {
+          
+          this.listadoProfesionales.push(element);
+        }
+      });
+    });
   }
 
-  async cargarProfesionales() {
-    this.listadoProfesionales = await this.usuarioService.get();
-  }
 }

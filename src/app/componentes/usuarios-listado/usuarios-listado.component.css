@@ -3,3 +3,14 @@ mat-card {
     margin: 2em auto;
     text-align: center;
 }
+
+img {
+    width: 20%;
+    height: auto;
+}
+
+td {
+    max-height: 10%;
+    max-width: 25%;
+    width: 25%;
+}

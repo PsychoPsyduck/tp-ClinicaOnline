@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from 'src/app/servicios/usuario.service';
+import { DataService } from 'src/app/servicios/data.service';
 
 @Component({
   selector: 'app-usuarios-listado',
@@ -8,17 +8,22 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 })
 export class UsuariosListadoComponent implements OnInit {
 
-  listadoUsuarios;
-  
+  listadoUsuarios = [];
+  listaAux;
 
-  constructor(public usuarioService: UsuarioService) { }
+  constructor(public dataService: DataService) { }
 
   ngOnInit() {
     
-    this.cargarUsuarios();
-  }
+    this.dataService.getAll2("usuarios").subscribe(res => {
+      this.listaAux = res;
 
-  async cargarUsuarios() {
-    this.listadoUsuarios = await this.usuarioService.get();
+      this.listaAux.forEach(element => {
+        if(element.rol == "usuario") {
+          
+          this.listadoUsuarios.push(element);
+        }
+      });
+    });
   }
 }
