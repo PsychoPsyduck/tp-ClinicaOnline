@@ -135,11 +135,10 @@ export class LoginComponent implements OnInit {
         });
         break;
       case "profesional":
-        // this.form.setValue({
-        //   mail: "profesional@mail.com",
-        //   clave: "123456"
-        // });
-        this.mostrar(true);
+        this.form.setValue({
+          mail: "profesional@mail.com",
+          clave: "123456"
+        });
         break;
       case "usuario":
         this.form.setValue({
@@ -154,9 +153,5 @@ export class LoginComponent implements OnInit {
     // this.toastr.error("Ocurrio un error: "+mensaje);
   }
 
-  mostrar(dato:boolean)
-  {
-    this.mostrarModal = dato;
-    console.log(this.mostrarModal)
-  }
+  
 }

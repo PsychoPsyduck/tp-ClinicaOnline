@@ -1,7 +1,7 @@
 <app-cabecera></app-cabecera>
 
 <mat-card>
-    <mat-card-title>Listado de usuarios</mat-card-title>
+    <mat-card-title>Listado de Turnos</mat-card-title>
     <table class="table">
         <thead>
             <tr>
@@ -24,21 +24,27 @@
                 2 - atendido
                 3 - finalizado
                 5 - rechazado -->
-                <td *ngIf="turno.estado == 0">
+                <td *ngIf="turno.estado == 0 && usuario.rol == 'profesional'">
                     <button (click)="cancelar(turno)" mat-raised-button color="warn" style="margin-right: 1rem;">Cancelar</button>
                     <button (click)="confirmar(turno)" mat-raised-button color="primary" style="margin-right: 1rem;">Confirmar</button>
                 </td>
-                <td *ngIf="turno.estado == 1">
+                <td *ngIf="turno.estado == 1 && usuario.rol == 'profesional'">
                     <button (click)="atender(turno)" mat-raised-button color="primary" style="margin-right: 1rem;">Atender</button>
                 </td>
-                <td *ngIf="turno.estado == 2">
+                <td *ngIf="turno.estado == 2 && usuario.rol == 'profesional'">
                     <button (click)="informe(turno)" mat-raised-button class="btn-warning" style="margin-right: 1rem;">Informe</button>
                 </td>
-                <td *ngIf="turno.estado == 3">
+                <td *ngIf="turno.estado == 3 && usuario.rol == 'profesional'">
                     <button (click)="informe(turno)" mat-raised-button class="btn-warning" style="margin-right: 1rem;">Informe</button>
                 </td>
-                <td *ngIf="turno.estado == 5">
+                <td *ngIf="turno.estado == 5 && usuario.rol == 'profesional'">
                     <button (click)="informe(turno)" mat-raised-button class="btn-warning" style="margin-right: 1rem;">Informe</button>
+                </td>
+                <td *ngIf="turno.estado != 2 && usuario.rol == 'usuario'">
+                    <button (click)="informe(turno)" mat-raised-button class="btn-warning" style="margin-right: 1rem;">Informe</button>
+                </td>
+                <td *ngIf="turno.estado == 2 && usuario.rol == 'usuario'">
+                    <button (click)="reseniar(turno)" mat-raised-button class="btn-warning" style="margin-right: 1rem;">Reseñar</button>
                 </td>
             </tr>
       
@@ -48,3 +54,4 @@
 
 <!-- <app-modal-turno [cancelar]="cancelarPro" [rechazar]="rechazarPro" [user]="usuario" [turno]="turnoSeleccionado"[mostrar]="mostrarModal" (eventoMostrarModal)="mostrarEncuesta($event)" (eventoJustifacion)="justificacion($event)"></app-modal-turno> -->
 <!-- <app-modal-turno [mostrar]="mostrarModal"></app-modal-turno> -->
+<app-modal-turno [mostrar]="mostrarModal" [estado]="estado" [turno]='turno' (cerrarOutput)='cerrarOutput($event)' (cerrarActualizarOutput)='cerrarActualizarOutput($event)'></app-modal-turno>

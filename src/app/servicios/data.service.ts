@@ -41,6 +41,8 @@ export class DataService {
 
   getAll3(path: string, tipo: string, especialidad: string) {
     var lista = Array<any>();
+    let fruta = []
+
     firebase.firestore().collection(path).get()
     .then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
@@ -49,30 +51,44 @@ export class DataService {
             docum.especialidad.forEach(element => {
               if(element == especialidad) {
                 let any = docum;
-                lista.push(any);
+                fruta.push(any);
               }
             });
           }
       });
     })
-    return lista;
+    return fruta;
   }
 
+  turnoshoras: string[] = ['8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00',
+  '13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30']
+
   getAll4(path: string, fecha: string) {
-    var lista = Array<any>();
+    let index;
+    var lista = this.turnoshoras;
+
     firebase.firestore().collection(path).get()
     .then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
         let docum = doc.data();
-        docum.fecha.forEach(element => {
-          if(element == fecha) {
+          if(docum.fecha == fecha) {
             let any = docum;
-            lista.push(any);
-          }
-        });
+            lista.forEach(element => {
+
+              if(element == any.horario) {
+                index = lista.indexOf(element);
+                lista.splice(index, 1);
+
+              }
+            });
+            
+
+            // lista.push(any.horario);
+          };
       });
+      // console.log(lista)
+      return lista;
     })
-    return lista;
   }
 
   getAll5(path: string, mail: string) {
@@ -84,6 +100,23 @@ export class DataService {
 
         let docum = doc.data();
         if(docum.medico.mail == mail) {
+          docum.uid = doc.id;
+          lista.push(docum);
+        }
+      });
+    })
+    return lista;
+  }
+
+  getAll6(path: string, mail: string) {
+    var lista = Array<any>();
+
+    firebase.firestore().collection(path).get()
+    .then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+
+        let docum = doc.data();
+        if(docum.paciente.mail == mail) {
           docum.uid = doc.id;
           lista.push(docum);
         }

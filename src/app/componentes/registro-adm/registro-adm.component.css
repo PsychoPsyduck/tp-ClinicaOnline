@@ -25,3 +25,8 @@ button {
     flex-direction: column;
     overflow: auto;
 }
+
+mat-form-field {
+    /* max-width: 90%; */
+    width: 90%;
+}

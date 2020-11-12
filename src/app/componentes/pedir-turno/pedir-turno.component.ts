@@ -5,6 +5,7 @@ import { UsuarioService } from '../../servicios/usuario.service';
 import { Profesional } from '../../clases/profesional'
 import { DataService } from 'src/app/servicios/data.service';
 import { LoginService } from 'src/app/servicios/login.service';
+import { Usuario } from 'src/app/clases/usuario';
 
 interface turnoHora {
   value: string;
@@ -31,13 +32,15 @@ export class PedirTurnoComponent implements OnInit {
 
                 this.selectedValueProf = "";
                 this.selectedValueHora = "";
-                this.turno = new Turno("",0,"","","","","","");
+                this.turno = new Turno(new Usuario("","",0,"","",""),0,"","","","","","");
   }
 
   ngOnInit(): void {
     this.usuario = this.loginService.usuario
-    // this.consultaDisponible();
-    // this.cargarProfesionales();
+    this.dataService.getAll2("usuarios").subscribe(res => {
+
+      this.turnos = res
+    });
   }
 
   profesionales = null;
@@ -46,41 +49,11 @@ export class PedirTurnoComponent implements OnInit {
   dia = null;
   turnos = null;
   hora = null;
+  horas = null;
 
-  turnoshoras: turnoHora[] = [
-          {value: '8:00'},
-          {value: '8:30'},
-          {value: '9:00'},
-          {value: '9:30'},
-          {value: '10:00'},
-          {value: '10:30'},
-          {value: '11:00'},
-          {value: '11:30'},
-          {value: '12:00'},
-          {value: '12:30'},
-          {value: '13:00'},
-          {value: '13:30'},
-          {value: '14:00'},
-          {value: '14:30'},
-          {value: '15:00'},
-          {value: '15:30'},
-          {value: '16:00'},
-          {value: '16:30'},
-          {value: '17:00'},
-          {value: '17:30'},
-          {value: '18:00'},
-          {value: '18:30'}];
-
+  turnoshoras: string[] = ['8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00',
+  '13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30']
   
-
-  // async cargarProfesionales() {
-  //   this.profesionales = await this.usuarioService.get();
-  //   console.log("this.profesionales");
-  //   console.log(this.profesionales);
-  // }
-
-
-
   enviarEsp(especialidad) {
     this.especialidad = especialidad;
     this.profesionales = this.dataService.getAll3("usuarios", "profesional", especialidad);
@@ -93,9 +66,40 @@ export class PedirTurnoComponent implements OnInit {
   }
 
   enviarDia(dia) {
+    let indexEmpieza;
+    let indexTermina;
     this.dia = dia;
-    // this.turnos = this.dataService.getAll4("turnos", dia);
-    console.log(this.dia);
+    let hor = this.turnoshoras;
+
+    hor.reverse();
+    
+    hor.forEach(element => {
+      if(element == this.profesional.salida){
+        console.log("llegue salida")
+        indexTermina = hor.indexOf(this.profesional.salida);
+        console.log(indexTermina)
+        hor.splice(0, indexTermina );
+      }
+    });
+
+    hor.reverse();
+
+    hor.forEach(element => {
+      if(element == this.profesional.entrada){
+        console.log("llegue entrada")
+        indexEmpieza = hor.indexOf(this.profesional.entrada);
+        console.log(indexEmpieza)
+        hor.splice(0, indexEmpieza);
+      }
+    });
+    
+    this.horas = hor;
+
+    // this.turnos.forEach(element => {
+    //   if(element.profesional.mail == this.profesional.mail)
+      
+    // });
+    
   }
 
   enviarHora(hora) {

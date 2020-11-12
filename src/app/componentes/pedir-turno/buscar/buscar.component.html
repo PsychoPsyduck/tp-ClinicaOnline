@@ -38,8 +38,8 @@
             <mat-form-field>
                 <mat-label>Hora:</mat-label>
                 <mat-select formControlName="hora">
-                    <mat-option *ngFor="let hora of turnoshoras" [value]="hora.value">
-                        {{hora.value}}
+                    <mat-option *ngFor="let hora of horas" [value]="hora">
+                        {{hora}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -47,7 +47,7 @@
 
         <div class="esConfirmar" [hidden]="!esConfirmar">
             <mat-card-subtitle><b>Especialidad:</b> {{turno.especialidad}}</mat-card-subtitle>
-            <mat-card-subtitle><b>Profesional:</b> Dr. {{turno.medico}}</mat-card-subtitle>
+            <mat-card-subtitle><b>Profesional:</b> Dr. {{turno.medico.apellido}}</mat-card-subtitle>
             <mat-card-subtitle><b>Dia:</b> {{turno.fecha}}</mat-card-subtitle>
             <mat-card-subtitle><b>Hora:</b> {{turno.horario}}</mat-card-subtitle>
         </div>

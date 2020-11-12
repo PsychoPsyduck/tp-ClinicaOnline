@@ -51,6 +51,7 @@ import { NuevaEspecialidadComponent } from './componentes/nueva-especialidad/nue
 import { BuscarComponent } from './componentes/pedir-turno/buscar/buscar.component';
 import { ModalTurnoComponent } from './componentes/modal-turno/modal-turno.component';
 
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,7 @@ import { ModalTurnoComponent } from './componentes/modal-turno/modal-turno.compo
     AngularFireStorageModule,
     RecaptchaModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

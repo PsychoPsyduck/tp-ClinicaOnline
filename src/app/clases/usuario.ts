@@ -13,6 +13,8 @@ export class Usuario{
     public rol:string; //sacar
     public especialidad;
     public dia;
+    public entrada;
+    public salida;
 
     constructor(nombre: string,apellido: string,edad: number,mail: string,contraseña: string, tipos:string){
         this.nombre=nombre;

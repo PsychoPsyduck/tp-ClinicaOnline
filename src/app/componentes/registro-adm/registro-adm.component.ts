@@ -35,6 +35,8 @@ export class RegistroAdmComponent implements OnInit {
   esProfesional = false;
   esAdmin = false;
 
+  mostrarSalida = false;
+
   master_checked: boolean = false;
   master_indeterminate: boolean = false;
   checkbox_list = [];
@@ -47,6 +49,11 @@ export class RegistroAdmComponent implements OnInit {
   
   dias: string[] = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
 
+  turnoshoras: string[] = ['8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00',
+                          '13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30'];
+
+  turnoSalida: string[] = ['8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00',
+                          '13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30'];
 
   usuario: Usuario = new Usuario(this.nombre, this.apellido, 40, this.mail, this.clave, '');
 
@@ -78,6 +85,8 @@ export class RegistroAdmComponent implements OnInit {
       rol: ['', Validators.required],
       especialidad: [[]],
       dia: [[]],
+      entrada: [[]],
+      salida: [[]],
       terminosCondiciones: ['']
     });
 
@@ -110,7 +119,7 @@ export class RegistroAdmComponent implements OnInit {
   }
 
   Registrar(event) {
-    const { nombre, apellido, especialidad, mail, clave, dia, rol } = this.form.value;
+    const { nombre, apellido, especialidad, mail, clave, dia, rol, entrada, salida } = this.form.value;
     event.preventDefault();
 
     console.log("llega")
@@ -118,6 +127,9 @@ export class RegistroAdmComponent implements OnInit {
     let usuario = new Usuario(nombre, apellido, 33, mail, clave, rol);
     usuario.especialidad = especialidad;
     usuario.dia = dia;
+    usuario.entrada = entrada;
+    usuario.salida = salida;
+
     console.log(usuario.dia);
 
     console.log(this.form.valid)
@@ -139,7 +151,7 @@ export class RegistroAdmComponent implements OnInit {
             // this.msjError = "Error al iniciar sesion. Verifique los datos";
         }
       }, 900);
-    } else if (rol == "admin" && nombre != "" && apellido != "" && mail != "" && clave != "") {
+    } else if (rol == "admin" && nombre != "" && apellido != "" && mail != "" && clave != "" && entrada != "" && salida != "") {
       this.ocultarVerificar=true;
       console.log(this.form.value);
       this.loginService.registroProfesional(usuario).then(res => {
@@ -164,10 +176,12 @@ export class RegistroAdmComponent implements OnInit {
     // this.setUserRolValidators();
     if (rol == "admin") {
       this.esAdmin = true;
-      this.esProfesional = false
+      this.esProfesional = false;
+      this.mostrarSalida = false;
     } else {
       this.esAdmin = false;
-      this.esProfesional = true
+      this.esProfesional = true;
+      this.mostrarSalida = false;
     }
   }
 
@@ -185,11 +199,37 @@ export class RegistroAdmComponent implements OnInit {
       repitaClave: '',
       rol: '',
       terminosCondiciones: '',
-      dia: null
+      dia: null,
+      entrada: null,
+      salida: null
     });
 
     this.form.reset();
     this.esAdmin = false;
     this.esProfesional = false;
+  }
+
+  seleccionHora(tipo: string) {
+    const { entrada, salida } = this.form.value;
+    let index;
+    // let turnoSalidaAux = this.turnoshoras;
+
+    if(tipo == "entrada") {
+      this.turnoshoras.forEach(element => {
+        if(element == entrada) {
+
+          index = this.turnoshoras.indexOf(element);
+          this.mostrarSalida = true;
+          this.llenarArray();
+        }
+      });
+    }
+
+    this.turnoSalida.splice(0, index + 1);
+  }
+
+  llenarArray() {
+    this.turnoSalida = ['8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00',
+    '13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30'];
   }
 }

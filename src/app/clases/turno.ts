@@ -1,9 +1,10 @@
 import { Especialidad } from './especialidad';
 import { ThrowStmt } from '@angular/compiler';
+import { Usuario } from './usuario';
 
 export class Turno
 {
-    public medico: string;
+    public medico: Usuario;
     public duracion: number;
     public fecha: string;
     public horario: string;
@@ -12,7 +13,7 @@ export class Turno
     public paciente: string;
     public estado: string;
 
-    constructor(medico: string, duracion: number, fecha: string, horario: string, especialidad: string, resenia: string, paciente: string, estado: string) {
+    constructor(medico: Usuario, duracion: number, fecha: string, horario: string, especialidad: string, resenia: string, paciente: string, estado: string) {
         this.medico = medico;
         this.duracion = duracion;
         this.fecha = fecha;

@@ -1,10 +1,113 @@
-<div *ngIf="mostrar == true"  id="id01" class="modal ">
+<div *ngIf="mostrar"  id="id01" class="modal ">
     <form class="modal-content animate ld ld-zoom-in" >
       <span (click)="cerrar()" class="close" title="Close Modal">×</span>
       <div  style="margin-top: 3rem;" class="container">
+        <form *ngIf="estado == '1'" [formGroup]="form">
+          <h2>Paciete</h2>
+          <mat-label>Nombre: {{turno.paciente.nombre}}</mat-label>
+          <br>
+          <mat-label>Apellido: {{turno.paciente.apellido}}</mat-label>
+          <br>
+          <mat-form-field class="full-width-input">
+            <mat-label>Edad</mat-label>
+            <input matInput type="number" formControlName="edad">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="full-width-input">
+            <mat-label>Temperatura</mat-label>
+            <input matInput type="number" formControlName="temperatura">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="full-width-input">
+            <mat-label>Presion</mat-label>
+            <input matInput type="number" formControlName="presion">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="full-width-input">
+            <mat-label>Comentario</mat-label>
+            <!-- <input matInput type="text" formControlName="comentario"> -->
+            <textarea matInput type="text" formControlName="comentario"></textarea>
+          </mat-form-field>
 
+          <button mat-raised-button color="warn" (click)="cerrar()">Cancelar</button>
+          <button mat-raised-button color="primary" (click)="terminarTurno()">Terminar</button>
+        </form>
         <!-- <div style="margin-left: 0.8rem;" id="extras" *ngFor="let nuevoItem of listaDinamicos" class="row">
         </div> -->
+        <form *ngIf="estado != '1' && estado != '6' && estado != '7'" [formGroup]="form">
+          <h2>Paciete</h2>
+          <mat-label>Nombre: {{turno.paciente.nombre}}</mat-label>
+          <br>
+          <mat-label>Apellido: {{turno.paciente.apellido}}</mat-label>
+          <br>
+          <mat-label>Edad: {{turno.resenia.edad}}</mat-label>
+          <br>
+          <mat-label>Temperatura: {{turno.resenia.temperatura}}</mat-label>
+          <br>
+          <mat-label>Presion: {{turno.resenia.presion}}</mat-label>
+          <br>
+          <textarea matInput type="text" disabled>Comentario: {{turno.resenia.comentario}}</textarea>
+          <br>
+          <mat-label *ngIf="turno.estado == '2'">Estado: Turno Finalizado</mat-label>
+          <mat-label *ngIf="turno.estado == '3'">Estado: Turno reseñado por paciente</mat-label>
+          <mat-label *ngIf="turno.estado == '5'">Estado: Turno cancelado</mat-label>
+          <br>
+          <button mat-raised-button color="warn" (click)="cerrar()">Cerrar</button>
+        </form>
+
+        <form *ngIf="estado == '6'" [formGroup]="form">
+          <h2>Medico</h2>
+          <mat-label>Dr. {{turno.medico.apellido}}</mat-label>
+          <br>
+          <mat-label>Especialidad: {{turno.medico.especialidad}}</mat-label>
+          <br>
+          <h2>Paciete</h2>
+          <mat-label>Nombre: {{turno.paciente.nombre}}</mat-label>
+          <br>
+          <mat-label>Apellido: {{turno.paciente.apellido}}</mat-label>
+          <br>
+          <mat-label>Edad: {{turno.resenia.edad}}</mat-label>
+          <br>
+          <mat-label>Temperatura: {{turno.resenia.temperatura}}</mat-label>
+          <br>
+          <mat-label>Presion: {{turno.resenia.presion}}</mat-label>
+          <br>
+          <textarea matInput type="text" disabled>Comentario: {{turno.resenia.comentario}}</textarea>
+          <br>
+          <mat-label *ngIf="turno.estado == '2'">Estado: Turno Finalizado</mat-label>
+          <mat-label *ngIf="turno.estado == '3'">Estado: Turno reseñado por paciente</mat-label>
+          <mat-label *ngIf="turno.estado == '5'">Estado: Turno cancelado</mat-label>
+          <br>
+          <button mat-raised-button color="warn" (click)="cerrar()">Cerrar</button>
+        </form>
+
+        <form *ngIf="estado == '7'" [formGroup]="form">
+          <h2>Medico</h2>
+          <mat-label>Dr. {{turno.medico.apellido}}</mat-label>
+          <br>
+          <mat-label>Especialidad: {{turno.medico.especialidad}}</mat-label>
+          <br>
+          <h2>Paciete</h2>
+          <mat-label>Nombre: {{turno.paciente.nombre}}</mat-label>
+          <br>
+          <mat-label>Apellido: {{turno.paciente.apellido}}</mat-label>
+          <br>
+          <mat-label>Edad: {{turno.resenia.edad}}</mat-label>
+          <br>
+          <mat-label>Temperatura: {{turno.resenia.temperatura}}</mat-label>
+          <br>
+          <mat-label>Presion: {{turno.resenia.presion}}</mat-label>
+          <br>
+          <textarea matInput type="text" disabled>Comentario: {{turno.resenia.comentario}}</textarea>
+          <br>
+          <mat-form-field class="full-width-input">
+            <mat-label>Atencion medica:</mat-label>
+            <input matInput type="text" formControlName="comentarioPaciente">
+          </mat-form-field>
+          <br>
+          <button mat-raised-button color="warn" (click)="cerrar()">Cerrar</button>
+          <button mat-raised-button color="primary" (click)="terminarPaciente()">Terminar</button>
+        </form>
       </div>
     </form>
 </div>

@@ -1,8 +1,11 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Turno } from 'src/app/clases/turno';
+import { Usuario } from 'src/app/clases/usuario';
 import { DataService } from 'src/app/servicios/data.service';
 import { LoginService } from 'src/app/servicios/login.service';
+// import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-buscar',
@@ -15,6 +18,7 @@ export class BuscarComponent implements OnInit {
   ocultarVerificar: boolean;
   Tiempo: number;
   repetidor:any;
+  
 
   especialidades;
   profesionales;
@@ -34,8 +38,9 @@ export class BuscarComponent implements OnInit {
   @Input() especialidad: string;
   @Input() profesionalesInp;
   @Input() dia: string[];
+  @Input() horas: string[];
   @Input() turnos: string[];
-  @Input() turno = new Turno("",0,"","","","","","",);
+  @Input() turno = new Turno(new Usuario("","",0,"","",""),0,"","","","","","");
 
   @Output() enviarEspecialidad= new EventEmitter<string>();
   @Output() enviarProfesional= new EventEmitter<string>();
@@ -43,33 +48,13 @@ export class BuscarComponent implements OnInit {
   @Output() enviarHora= new EventEmitter<string>();
   @Output() enviarTurno= new EventEmitter<Turno>();
 
-  turnoshoras = [
-    {value: '8:00'},
-    {value: '8:30'},
-    {value: '9:00'},
-    {value: '9:30'},
-    {value: '10:00'},
-    {value: '10:30'},
-    {value: '11:00'},
-    {value: '11:30'},
-    {value: '12:00'},
-    {value: '12:30'},
-    {value: '13:00'},
-    {value: '13:30'},
-    {value: '14:00'},
-    {value: '14:30'},
-    {value: '15:00'},
-    {value: '15:30'},
-    {value: '16:00'},
-    {value: '16:30'},
-    {value: '17:00'},
-    {value: '17:30'},
-    {value: '18:00'},
-    {value: '18:30'}];
+  turnoshoras: string[] = ['8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00',
+  '13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30']
 
   constructor(private loginService: LoginService,
               private fb: FormBuilder,
-              private dataService: DataService) { }
+              private dataService: DataService,
+              private datePipe: DatePipe) { }
 
   ngOnInit() {
     
@@ -121,7 +106,8 @@ export class BuscarComponent implements OnInit {
         this.enviarProfesional.emit(profesional);
         break;
       case 3:
-        this.enviarDia.emit(dia);
+        let aux =  this.datePipe.transform(dia, 'dd/MM/yyyy');
+        this.enviarDia.emit(aux);
         break;
       case 4:
         this.enviarHora.emit(hora);

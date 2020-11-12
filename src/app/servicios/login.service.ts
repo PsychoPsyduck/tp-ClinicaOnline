@@ -199,6 +199,8 @@ export class LoginService {
       rol: usuario.tipo,
       especialidad: usuario.especialidad,
       dia: usuario.dia,
+      entrada: usuario.entrada,
+      salida: usuario.salida
     }
 
     return firebase.auth().createUserWithEmailAndPassword(usuarioCrear.mail, usuarioCrear.clave).then((result) => {

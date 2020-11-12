@@ -18,5 +18,19 @@ export class TurnoService {
       estado: estado,
     }) 
   }
+
+  updateResenia(turno, resenia) { 
+    return  this.db.collection('turnos').doc(turno.uid.toString()).update({
+      estado: "2",
+      resenia: resenia
+    }) 
+  }
+
+  updateReseniaPaciente(turno, resenia) { 
+    return  this.db.collection('turnos').doc(turno.uid.toString()).update({
+      estado: "3",
+      reseniaPaciente: resenia
+    }) 
+  }
 }
 
