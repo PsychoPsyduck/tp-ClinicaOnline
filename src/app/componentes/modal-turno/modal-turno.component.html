@@ -29,6 +29,21 @@
             <textarea matInput type="text" formControlName="comentario"></textarea>
           </mat-form-field>
 
+          <div *ngFor="let nuevoItem of listaDinamicos">
+            <mat-form-field class="full-width-input">
+              <mat-label>Nuevo dato</mat-label>
+              <input [(ngModel)]="nuevoItem.propiedad" matInput  type="text" value="chau" [ngModelOptions]="{standalone: true}">
+            </mat-form-field> 
+            <mat-form-field class="full-width-input">
+            <mat-label >Valor nuevo dato</mat-label>
+              <input [(ngModel)]="nuevoItem.valor" matInput  type="text" value="chau" [ngModelOptions]="{standalone: true}">
+            </mat-form-field> 
+          </div>
+
+          
+          <button *ngIf="listaDinamicos.length < 3" mat-raised-button class="btn-success" (click)="onAgregarDatos()">+ Datos</button>
+          <br>
+
           <button mat-raised-button color="warn" (click)="cerrar()">Cancelar</button>
           <button mat-raised-button color="primary" (click)="terminarTurno()">Terminar</button>
         </form>
@@ -105,6 +120,7 @@
             <input matInput type="text" formControlName="comentarioPaciente">
           </mat-form-field>
           <br>
+          
           <button mat-raised-button color="warn" (click)="cerrar()">Cerrar</button>
           <button mat-raised-button color="primary" (click)="terminarPaciente()">Terminar</button>
         </form>

@@ -37,7 +37,7 @@ export class PedirTurnoComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuario = this.loginService.usuario
-    this.dataService.getAll2("usuarios").subscribe(res => {
+    this.dataService.getAll2("turnos").subscribe(res => {
 
       this.turnos = res
     });
@@ -68,6 +68,7 @@ export class PedirTurnoComponent implements OnInit {
   enviarDia(dia) {
     let indexEmpieza;
     let indexTermina;
+    let index;
     this.dia = dia;
     let hor = this.turnoshoras;
 
@@ -93,13 +94,19 @@ export class PedirTurnoComponent implements OnInit {
       }
     });
     
-    this.horas = hor;
 
-    // this.turnos.forEach(element => {
-    //   if(element.profesional.mail == this.profesional.mail)
-      
-    // });
+    this.turnos.forEach(element => {
+      if(element.medico.mail == this.profesional.mail) {
+        hor.forEach(hora => {
+          if(element.horario == hora) {
+            index = hor.indexOf(hora);
+            hor.splice(index, 1);
+          }
+        });
+      }
+    });
     
+    this.horas = hor;
   }
 
   enviarHora(hora) {

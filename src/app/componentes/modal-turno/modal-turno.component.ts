@@ -32,7 +32,7 @@ export class ModalTurnoComponent implements OnInit {
       temperatura: ['', Validators.required],
       presion: ['', Validators.required],
       comentario: ['', Validators.required],
-      comentarioPaciente: ['', Validators.required],
+      comentarioPaciente: ['', Validators.required]
     });
   }
   
@@ -93,5 +93,10 @@ export class ModalTurnoComponent implements OnInit {
     this.turnoService.updateReseniaPaciente(this.turno, reseniaPaciente).then(res => {
       this.cerrarActualizar();
     }).catch(err => console.log(err));
+  }
+
+  onAgregarDatos(){
+    this.listaDinamicos.push({propiedad:"",valor:""});    
+    
   }
 }

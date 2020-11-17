@@ -52,6 +52,7 @@ import { BuscarComponent } from './componentes/pedir-turno/buscar/buscar.compone
 import { ModalTurnoComponent } from './componentes/modal-turno/modal-turno.component';
 
 import { DatePipe } from '@angular/common';
+import { GraficaDiasComponent } from './componentes/grafica-dias/grafica-dias.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { DatePipe } from '@angular/common';
     UsuariosListadoComponent,
     NuevaEspecialidadComponent,
     BuscarComponent,
-    ModalTurnoComponent
+    ModalTurnoComponent,
+    GraficaDiasComponent
   ],
   imports: [
     BrowserModule,
