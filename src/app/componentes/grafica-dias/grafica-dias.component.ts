@@ -5,6 +5,7 @@ import { Label } from 'ng2-charts';
 import { DataService } from 'src/app/servicios/data.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { ExportToCsv } from 'export-to-csv';
 
 @Component({
   selector: 'app-grafica-dias',
@@ -96,6 +97,38 @@ export class GraficaDiasComponent implements OnInit {
     }).then((docResult) => {
       docResult.save(`${new Date().toISOString()}_tutorial.pdf`);
     });
+  }
+
+  exportExcel() {
+    const options = { 
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalSeparator: '.',
+      showLabels: true, 
+      showTitle: true,
+      title: 'Listado de ingresos',
+      useTextFile: false,
+      useBom: true,
+      useKeysAsHeaders: true,
+      // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
+    };
+
+    let lista = []
+
+    this.listaEntradas.forEach(element => {
+      let data = {
+        nombre: element.usuario.nombre,
+        apellido: element.usuario.apellido,
+        mail: element.usuario.mail,
+        dias: element.usuario.dia.toString(),
+        ingreso: element.fecha
+      }
+      lista.push(data)
+    });
+
+    const csvExporter = new ExportToCsv(options);
+ 
+    csvExporter.generateCsv(lista);
   }
 }
 
