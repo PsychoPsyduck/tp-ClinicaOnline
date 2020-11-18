@@ -35,7 +35,7 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "./node_modules/@fortawesome/fontawesome-free/js/all.js",
               "node_modules/html2canvas/dist/html2canvas.min.js",
-              "node_modules/jspdf/dist/jspdf.es.min.js"
+              "node_modules/jspdf/dist/jspdf.min.js"
             ]
           },
           "configurations": {

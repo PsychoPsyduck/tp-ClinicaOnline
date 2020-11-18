@@ -55,6 +55,7 @@ import { DatePipe } from '@angular/common';
 import { GraficaDiasComponent } from './componentes/grafica-dias/grafica-dias.component';
 import { ChartsModule } from 'ng2-charts';
 import { InformeComponent } from './componentes/informe/informe.component';
+// import  jsPDF  from 'jspdf';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,7 @@ import { InformeComponent } from './componentes/informe/informe.component';
     AngularFireAuthModule,
     AngularFireStorageModule,
     RecaptchaModule,
-    ChartsModule 
+    ChartsModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
