@@ -17,6 +17,7 @@ import "firebase/firestore";
 import { rejects } from 'assert';
 import { map } from 'rxjs/operators';
 import { DataService } from './data.service';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,8 @@ export class LoginService {
               public uploadService: UploadService,
               public angularFireAuth:AngularFireAuth,
               private dataService: DataService,
-              private afs: AngularFirestore) {
+              private afs: AngularFirestore,
+              private datePipe: DatePipe) {
               this.usuario = this.angularFireAuth.authState;
                }
 
@@ -246,5 +248,16 @@ export class LoginService {
     this.dataService.traerUno("usuarios", "mail", email).then(res => {
       this.usuario = res;
     })
+  }
+
+  registrarEntrada(usuario) {
+    let nuevaEntrada = {
+      usuario: usuario,
+      fecha: this.datePipe.transform(new Date(), 'dd/MM/yyyy')
+    }
+
+    // console.log(nuevaEntrada.fecha);
+    this.dataService.crear("entradas", nuevaEntrada);
+    
   }
 }

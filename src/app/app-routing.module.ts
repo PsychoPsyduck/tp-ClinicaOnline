@@ -14,6 +14,7 @@ import { UsuariosListadoComponent } from './componentes/usuarios-listado/usuario
 import { TurnosListadoComponent } from './componentes/turnos-listado/turnos-listado.component';
 import { CartillaComponent } from './componentes/cartilla/cartilla.component';
 import { NuevaEspecialidadComponent } from './componentes/nueva-especialidad/nueva-especialidad.component';
+import { InformeComponent } from './componentes/informe/informe.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,7 @@ const routes: Routes = [
   {path: 'verTurnos', component: TurnosListadoComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
   {path: 'verCartilla', component: CartillaComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
   {path: 'nuevaEspecialidad', component: NuevaEspecialidadComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
+  {path: 'informe', component: InformeComponent}, //, canActivate: [AuthGuard]
   {path: '**', pathMatch: 'full', redirectTo: 'inicio'}
 ];
 

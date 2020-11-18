@@ -70,12 +70,14 @@ export class LoginComponent implements OnInit {
   Entrar() {
     const { mail, clave } = this.form.value;
     let rol;
+    let usuario;
 
     if((mail && clave && this.recaptcha) || (mail && clave && this.desabilitar)) {
       this.ocultarVerificar=true;
       
       this.usuarios.forEach(element => {
         if(element.mail == mail) {
+          usuario = element;
           rol = element.rol;
         }
       });
@@ -83,6 +85,7 @@ export class LoginComponent implements OnInit {
       if(rol == "profesional") {
 
         this.loginService.ingresoInstitucional(mail, clave).then( res => {
+          this.loginService.registrarEntrada(usuario);
           this.router.navigate(['/home']);
           this.authService.login().subscribe(resp => {this.router.navigate(['home'])
           });

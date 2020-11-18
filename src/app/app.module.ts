@@ -53,6 +53,8 @@ import { ModalTurnoComponent } from './componentes/modal-turno/modal-turno.compo
 
 import { DatePipe } from '@angular/common';
 import { GraficaDiasComponent } from './componentes/grafica-dias/grafica-dias.component';
+import { ChartsModule } from 'ng2-charts';
+import { InformeComponent } from './componentes/informe/informe.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +83,8 @@ import { GraficaDiasComponent } from './componentes/grafica-dias/grafica-dias.co
     NuevaEspecialidadComponent,
     BuscarComponent,
     ModalTurnoComponent,
-    GraficaDiasComponent
+    GraficaDiasComponent,
+    InformeComponent
   ],
   imports: [
     BrowserModule,
@@ -96,7 +99,8 @@ import { GraficaDiasComponent } from './componentes/grafica-dias/grafica-dias.co
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
-    RecaptchaModule
+    RecaptchaModule,
+    ChartsModule 
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
