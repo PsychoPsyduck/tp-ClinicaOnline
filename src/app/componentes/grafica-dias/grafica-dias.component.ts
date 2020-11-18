@@ -82,21 +82,21 @@ export class GraficaDiasComponent implements OnInit {
       background: 'white',
       scale: 3
     };
-    html2canvas(DATA, options).then((canvas) => {
 
-      const img = canvas.toDataURL('image');
-
-      // Add image Canvas to PDF
-      const bufferX = 15;
-      const bufferY = 15;
-      const imgProps = (doc as any).getImageProperties(img);
-      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
-      return doc;
-    }).then((docResult) => {
-      docResult.save(`${new Date().toISOString()}_tutorial.pdf`);
-    });
+    html2canvas(DATA).then(canvas => {  
+      // Few necessary setting options  
+      var imgWidth = 208;   
+      var pageHeight = 295;    
+      var imgHeight = canvas.height * imgWidth / canvas.width;  
+      var heightLeft = imgHeight;  
+  
+      const contentDataURL = canvas.toDataURL('image/png')  
+      // let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
+      var position = 0;  
+      doc.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)  
+      doc.save('MYPdf.pdf'); // Generated PDF   
+    });  
+    
   }
 
   exportExcel() {
