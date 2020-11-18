@@ -75,7 +75,8 @@ export class ModalTurnoComponent implements OnInit {
       edad: edad,
       temperatura: temperatura,
       presion: presion,
-      comentario: comentario
+      comentario: comentario,
+      adicional: this.listaDinamicos
     }
 
     this.turnoService.updateResenia(this.turno, resenia).then(res => {

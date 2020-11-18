@@ -55,6 +55,8 @@ import { DatePipe } from '@angular/common';
 import { GraficaDiasComponent } from './componentes/grafica-dias/grafica-dias.component';
 import { ChartsModule } from 'ng2-charts';
 import { InformeComponent } from './componentes/informe/informe.component';
+import { EstadoPipe } from './pipes/estado.pipe';
+import { EstadoDirective } from './directivas/estado.directive';
 // import  jsPDF  from 'jspdf';
 
 @NgModule({
@@ -85,7 +87,9 @@ import { InformeComponent } from './componentes/informe/informe.component';
     BuscarComponent,
     ModalTurnoComponent,
     GraficaDiasComponent,
-    InformeComponent
+    InformeComponent,
+    EstadoPipe,
+    EstadoDirective
   ],
   imports: [
     BrowserModule,
@@ -103,7 +107,7 @@ import { InformeComponent } from './componentes/informe/informe.component';
     RecaptchaModule,
     ChartsModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, EstadoPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
