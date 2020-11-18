@@ -84,7 +84,7 @@ export class GraficaDiasComponent implements OnInit {
     };
     html2canvas(DATA, options).then((canvas) => {
 
-      const img = canvas.toDataURL('image/PNG');
+      const img = canvas.toDataURL('image');
 
       // Add image Canvas to PDF
       const bufferX = 15;
