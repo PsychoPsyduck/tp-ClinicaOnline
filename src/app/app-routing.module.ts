@@ -32,8 +32,8 @@ const routes: Routes = [
   {path: 'verTurnos', component: TurnosListadoComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
   {path: 'verCartilla', component: CartillaComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
   {path: 'nuevaEspecialidad', component: NuevaEspecialidadComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
-  {path: 'verTurnosAdm', component: TurnosComponent}, //, canActivate: [AuthGuard]
-  {path: 'informe', component: InformeComponent}, //, canActivate: [AuthGuard]
+  {path: 'verTurnosAdm', component: TurnosComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
+  {path: 'informe', component: InformeComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
   {path: '**', pathMatch: 'full', redirectTo: 'inicio'}
 ];
 

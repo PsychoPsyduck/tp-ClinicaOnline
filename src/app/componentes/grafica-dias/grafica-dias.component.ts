@@ -32,8 +32,8 @@ export class GraficaDiasComponent implements OnInit {
   public barChartPlugins = [pluginDataLabels];
 
   public barChartData: ChartDataSets[] = [
-      { data: [65, 59, 80, 81, 56, 55], label: 'Series A' },
-      { data: [28, 48, 40, 19, 86, 27], label: 'Series B' }
+      { data: [15, 5, 8, 11, 16, 5], label: 'Dr. Lopez' },
+      { data: [18, 8, 4, 19, 16, 2], label: 'Dr. Perez' }
   ];
 
   constructor(private dataService: DataService) { }
@@ -65,13 +65,13 @@ export class GraficaDiasComponent implements OnInit {
   public randomize(): void {
     // Only Change 3 values
     this.barChartData[0].data = [
-        Math.round(Math.random() * 100),
-        59,
-        80,
-        (Math.random() * 100),
-        56,
-        (Math.random() * 100),
-        40];
+        Math.round(Math.random() * 20),
+        14,
+        8,
+        (Math.random() * 20),
+        7,
+        (Math.random() * 20),
+        17];
   }
 
   export() {
@@ -94,7 +94,7 @@ export class GraficaDiasComponent implements OnInit {
       // let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
       var position = 0;  
       doc.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)  
-      doc.save('MYPdf.pdf'); // Generated PDF   
+      doc.save('TP-Clinica.pdf'); // Generated PDF   
     });  
     
   }
@@ -131,13 +131,3 @@ export class GraficaDiasComponent implements OnInit {
     csvExporter.generateCsv(lista);
   }
 }
-
-
-// import jsPDF from 'jspdf';
-// import html2canvas from 'html2canvas';
-// public SavePDF2(): void {
-//   const doc = new jsPDF();
-
-//   doc.text('Hello world!', 10, 10);
-//   doc.save('hello-world.pdf');
-// }

@@ -2,7 +2,8 @@
 
 <mat-card>
     <mat-card-title>Listado de Turnos</mat-card-title>
-    <table class="table">
+    <input type="text" id="myInput" (keyup)='myFunction()' placeholder="Busqueda...">
+    <table class="table" >
         <thead>
             <tr>
                 <th>Estado</th>
@@ -13,7 +14,7 @@
                 <th>Accion</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="myTable">
             <tr *ngFor="let turno of listadoTurnos" >
                 <td appEstado><b>{{turno.estado | estado}}</b></td>
                 <td>{{turno.paciente.nombre}} {{turno.paciente.apellido}}</td> 
@@ -32,3 +33,4 @@
         </tbody>
     </table>
 </mat-card>
+<app-modal-turno [mostrar]="mostrarModal" [estado]="9" [turno]='turno' (cerrarOutput)='cerrarOutput($event)'></app-modal-turno>
