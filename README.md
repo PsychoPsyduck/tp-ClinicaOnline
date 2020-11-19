@@ -2,6 +2,8 @@
 
 Trabajo práctico - Laboratorio IV
 
+<img src="/src/assets/img/logo.png" alt="">
+
 _Este proyecto fue generado con Angular CLI versión 9.1.6._
 
 ## Sitio de prueba 🚀
