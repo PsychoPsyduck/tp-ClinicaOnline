@@ -91,11 +91,11 @@ export class BuscarComponent implements OnInit {
     }
   }
 
-  seleccionProfesion(){
+  Buscar(event){
     
   }
 
-  Buscar(event){
+  seleccionProfesion(){
     const { especialidad, profesional, dia, hora} = this.form.value;
 
     switch (this.accion) {

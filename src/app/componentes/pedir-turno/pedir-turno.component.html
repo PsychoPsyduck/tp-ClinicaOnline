@@ -37,16 +37,16 @@
       <app-buscar [titulo]='"Profesion"' [accion]='1' (enviarEspecialidad)='enviarEsp($event)'></app-buscar>
     </div>
     <div class="col-md-2">
-      <app-buscar [titulo]='"Profesional"' [accion]='2' [profesionalesInp]='profesionales' (enviarProfesional)='enviarProfesional($event)'></app-buscar>
+      <app-buscar [titulo]='"Profesional"' *ngIf="paso > 0" [accion]='2' [profesionalesInp]='profesionales' (enviarProfesional)='enviarProfesional($event)'></app-buscar>
     </div>
     <div class="col-md-2">
-      <app-buscar [titulo]='"Dia"' [accion]='3' [dia]='dias' (enviarDia)='enviarDia($event)'></app-buscar>
+      <app-buscar [titulo]='"Dia"' *ngIf="paso > 1" [accion]='3' [dia]='dias' (enviarDia)='enviarDia($event)'></app-buscar>
     </div>
     <div class="col-md-2">
-      <app-buscar [titulo]='"Horario"' [accion]='4' [horas]='horas' (enviarHora)='enviarHora($event)'></app-buscar>
+      <app-buscar [titulo]='"Horario"' *ngIf="paso > 2" [accion]='4' [horas]='horas' (enviarHora)='enviarHora($event)'></app-buscar>
     </div>
     <div class="col-md-4">
-      <app-buscar [titulo]='"Confirmar"' [accion]='5' [turno]='turno' (enviarTurno)='enviarTurno($event)'></app-buscar>
+      <app-buscar [titulo]='"Confirmar"' *ngIf="paso > 3" [accion]='5' [turno]='turno' (enviarTurno)='enviarTurno($event)'></app-buscar>
     </div>
   </div>
 </mat-card>

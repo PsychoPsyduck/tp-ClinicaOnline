@@ -22,6 +22,8 @@ export class PedirTurnoComponent implements OnInit {
   selectedValueHora: string;
   turno: Turno;
 
+  paso = 0;
+
   usuario = null;
   especialidad = null;
 
@@ -57,15 +59,20 @@ export class PedirTurnoComponent implements OnInit {
   enviarEsp(especialidad) {
     this.especialidad = especialidad;
     this.profesionales = this.dataService.getAll3("usuarios", "profesional", especialidad);
+    this.paso = 1;
   }
   
   enviarProfesional(usuario) {
     this.profesional = usuario;
     this.dias = usuario.dia;
-    console.log(this.dias);
+    this.paso = 2;
+
   }
 
   enviarDia(dia) {
+    this.turnoshoras = ['8:00','8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00',
+    '13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30'];
+
     let indexEmpieza;
     let indexTermina;
     let index;
@@ -96,7 +103,7 @@ export class PedirTurnoComponent implements OnInit {
     
 
     this.turnos.forEach(element => {
-      if(element.medico.mail == this.profesional.mail) {
+      if(element.medico.mail == this.profesional.mail && element.fecha == dia) {
         hor.forEach(hora => {
           if(element.horario == hora) {
             index = hor.indexOf(hora);
@@ -107,6 +114,8 @@ export class PedirTurnoComponent implements OnInit {
     });
     
     this.horas = hor;
+
+    this.paso = 3;
   }
 
   enviarHora(hora) {
@@ -118,6 +127,8 @@ export class PedirTurnoComponent implements OnInit {
     this.turno.medico = this.profesional;
     this.turno.fecha = this.dia;
     this.turno.horario = hora;
+
+    this.paso = 4;
   }
 
   enviarTurno(turno: Turno) {
@@ -134,6 +145,9 @@ export class PedirTurnoComponent implements OnInit {
     }
     
     console.log(turnoAux);
-    this.dataService.crear('turnos', turnoAux);
+    this.dataService.crear('turnos', turnoAux).then(res =>
+      this.paso = 0,
+
+    );
   }
 }

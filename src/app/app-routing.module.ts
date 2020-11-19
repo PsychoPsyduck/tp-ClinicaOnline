@@ -25,7 +25,7 @@ const routes: Routes = [
   },
   {path: 'home', component: HomeComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
   {path: 'registro' , component: RegistroAdmComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
-  {path: 'pedirTurno', component: PedirTurnoComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
+  {path: 'pedirTurno', component: PedirTurnoComponent}, //, canActivate: [AuthGuard]
   {path: 'turnoMedico', component: TurnoMedicoComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
   {path: 'atencion', component: AtenderTurnoComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]
   {path: 'verUsuarios', component: UsuariosListadoComponent, canActivate: [AuthGuard]}, //, canActivate: [AuthGuard]

@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-title>{{titulo}}</mat-card-title>
     <br>
-    <form [formGroup]="form" (ngSubmit)="Buscar($event)">
+    <form [formGroup]="form">
 
         <div [hidden]="!esProfesion">
             <mat-form-field>
@@ -28,7 +28,7 @@
         <div [hidden]="!esDia">
             <mat-form-field color="accent">
                 <mat-label>Fecha:</mat-label>
-                <input matInput formControlName="dia" [min]='today' [matDatepickerFilter]="myFilter" [matDatepicker]="picker1" disabled>
+                <input matInput formControlName="dia" [min]='today' [matDatepickerFilter]="myFilter" [matDatepicker]="picker1" (dateChange)="seleccionProfesion()" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1 disabled="false" disablePast></mat-datepicker>
             </mat-form-field>
@@ -37,7 +37,7 @@
         <div [hidden]="!esHora">
             <mat-form-field>
                 <mat-label>Hora:</mat-label>
-                <mat-select formControlName="hora">
+                <mat-select formControlName="hora" (selectionChange)="seleccionProfesion()">
                     <mat-option *ngFor="let hora of horas" [value]="hora">
                         {{hora}}
                     </mat-option>
@@ -52,8 +52,8 @@
             <mat-card-subtitle><b>Hora:</b> {{turno.horario}}</mat-card-subtitle>
         </div>
 
-        <button [hidden]="ocultarVerificar" mat-raised-button color="primary" type="submit">{{boton}}</button>
-        <button [hidden]="!ocultarVerificar" mat-raised-button color="primary" ><i class="fa fa-spinner fa-spin"></i> Registrando</button>
+        <button [hidden]="ocultarVerificar" *ngIf="accion == 5" mat-raised-button color="primary" type="submit" (click)="seleccionProfesion()">{{boton}}</button>
+        <!-- <button [hidden]="!ocultarVerificar" mat-raised-button color="primary" ><i class="fa fa-spinner fa-spin"></i> Registrando</button>                      -->
         
     </form>
 
