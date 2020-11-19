@@ -1,4 +1,4 @@
-# TP Clinica Online
+# TP Clinica Online 🏥
 
 Trabajo práctico - Laboratorio IV
 
@@ -23,6 +23,26 @@ ng serve
 ```
 
 _Ingresa a `http://localhost:4200/` para la prueba local._
+
+## Paginas principales 📷
+
+_Ingreso de usuarios_
+<img src="/src/assets/img/Inicio.png" alt="">
+
+_Registro de clientes_
+<img src="/src/assets/img/Registro.png" alt="">
+
+
+_Paginas de inicio y funcionalidades segun rol:_
+
+_-Administrador_
+<img src="/src/assets/img/Admin.png" alt="">
+
+_-Profesional_
+<img src="/src/assets/img/Profesional.png" alt="">
+
+_-Cliente_
+<img src="/src/assets/img/Cliente.png" alt="">
 
 ## Construido con 🛠️
 
